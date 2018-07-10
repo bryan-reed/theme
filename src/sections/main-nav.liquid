@@ -1,0 +1,161 @@
+<section data-section-id="{{ section.id }}" data-section-type="navigation">
+{% comment %} Get mega menu blocks into new array, then join it into a string so we can then downcase it, then split back into array {% endcomment %}
+{% assign megaMenus = section.blocks | map: 'settings' | map: 'title' | join: ',' | downcase | split: ','  %}
+<nav class="main-nav container layout-{{section.settings.mobile_navigation_layout}}" role="navigation">
+    {% comment %} <div class="mobile-nav-close">
+        &#10005;
+    </div> {% endcomment %}
+    <ul class="main-nav__top">
+    {% for link in linklists[section.settings.menu].links %}
+        {% assign linkValue = link.title | downcase %}
+        {% if megaMenus contains linkValue %}
+        <li class="mega-menu">
+            <a href="{{ link.url }}">{{link.title}}</a>
+            {% for block in section.blocks %}
+                {% assign blockValue = block.settings.title | downcase %}
+                {% if blockValue == linkValue %}
+                    {% include 'mega-menu' %}
+                    {% break %}
+                {% endif %}
+            {% endfor %}
+        </li>
+        {% elsif link.links != blank %}
+        <li class="dropdown">
+            <a href="{{ link.url }}">{{link.title}}</a>
+            <ul>
+            {% for childlink in link.links %}
+                <li {% if childlink.links != blank %}
+                    class="dropdown-2"
+                {% endif %}>
+                <a href="{{ childlink.url }}">
+                    {{ childlink.title }}
+                </a>
+                {% if childlink.links != blank %}
+                        <ul>
+                        {% for grandchildLink in childlink.links %}
+                            <li>
+                            <a href="{{ grandchildLink.url }}">
+                                {{ grandchildLink.title }}
+                            </a>
+                            </li>
+                        {% endfor %}
+                        </ul>
+                    {% endif %}
+                </li>
+            {% endfor %}
+            </ul>
+        </li>
+        {% else %}
+            <li><a href="{{ link.url }}">{{link.title}}</a></li>
+        {% endif %}
+    {% endfor %}
+    </ul>
+</nav>
+<div class="mobile-nav-background"></div>
+</section>
+
+{% schema %}
+  {
+    "name": "Main Nav",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Main Menu"
+      },
+      {
+        "type": "link_list",
+        "id": "menu",
+        "label": "Menu",
+        "default": "main-menu"
+      },{
+        "type": "select",
+        "id": "mobile_navigation_layout",
+        "label": "Mobile Navigation",
+        "options": [
+            { "value": "left", "label": "Slide from left"},
+            { "value": "down", "label": "Slide Down"}
+        ],
+        "default": "left"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "mega_menu",
+        "name": "Mega Menu",
+        "settings": [
+          {
+            "id": "title",
+            "type": "text",
+            "label": "Link in Main Menu",
+            "info": "Will show a Mega Menu if selected link is in the Main Menu"
+          },
+          {
+            "id": "image",
+            "type": "image_picker",
+            "label": "Image"
+          },
+          {
+            "type": "select",
+            "id": "image_position",
+            "label": "Position of Image",
+            "options": [
+                { "value": "left", "label": "Left"},
+                { "value": "right", "label": "Right"}
+            ],
+            "default": "left"
+        }
+        ]
+      }
+    ]
+  }
+{% endschema %}
+
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Organization",
+  "name": "{{ shop.name }}",
+  {% if section.settings.logo %}
+    {% assign image_size = section.settings.logo.width | append:'x' %}
+    "logo": "https:{{ section.settings.logo | img_url: image_size }}",
+  {% endif %}
+  "sameAs": [
+    "{{ settings.social_twitter_link }}",
+    "{{ settings.social_facebook_link }}",
+    "{{ settings.social_pinterest_link }}",
+    "{{ settings.social_instagram_link }}",
+    "{{ settings.social_tumblr_link }}",
+    "{{ settings.social_snapchat_link }}",
+    "{{ settings.social_youtube_link }}",
+    "{{ settings.social_vimeo_link }}"
+  ],
+  "url": "{{ shop.url }}{{ page.url }}"
+}
+</script>
+
+{% if template.name == 'index' %}
+  <script type="application/ld+json">
+    {
+      "@context": "http://schema.org",
+      "@type": "WebSite",
+      "name": "{{ shop.name }}",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "{{ shop.url }}/search?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      },
+      "url": "{{ shop.url }}{{ page.url }}"
+    }
+  </script>
+{% endif %}
+{% javascript %}
+  //Only blocks in this section are for mega menu, so when selected just make the given mega menu visibile
+  document.addEventListener('shopify:block:select', blockSelected);
+  document.addEventListener('shopify:block:deselect', blockDeselected);
+  function blockSelected(e) {
+    e.target.classList.add('theme-mega-selected');
+  }
+  function blockDeselected(e) {
+    e.target.classList.remove('theme-mega-selected');
+  }
+{% endjavascript %}

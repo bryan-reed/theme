@@ -1,0 +1,56 @@
+<div class="mega-menu__container" {{ block.shopify_attributes }}>
+    {% if block.settings.image != blank %}
+        <div class="mega-menu__container__col image-{{block.settings.image_position}}">
+            <img data-src="{{ block.settings.image | img_url: '250x' }}" alt="" class="lazyload" />
+        </div>
+    {% endif %}
+    {% if link.levels %}
+     {% for childlink in link.links %}
+        <div class="mega-menu__container__col">
+            <div class="mega-menu__container__col__text">
+                <a class="column_header" href="{{ childlink.url }}">
+                    {{ childlink.title }}
+                </a>
+                {% if childlink.links %}
+                    <ul>
+                    {% for grandchildLink in childlink.links %}
+                        <li>
+                        <a href="{{ grandchildLink.url }}">
+                            {{ grandchildLink.title }}
+                        </a>
+                        </li>
+                    {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+        </div>
+    {% endfor %}
+        {% comment %} More than one column {% endcomment %}
+        {% comment %} <div class="mega-menu__container__col">
+            <div class="mega-menu__container__col__text">
+                <h4>Shop By</h4>
+                <ul>
+                    <li>Tops</li>
+                    <li>Dresses</li>
+                    <li>Bottoms</li>
+                    <li>Sweatshirts</li>
+                    <li>Sweaters</li>
+                </ul>
+            </div>
+        </div>
+        <div class="mega-menu__container__col">
+            <div class="mega-menu__container__col__text">
+                <h4>Featured</h4>
+                <ul>
+                    <li>New Arrivals</li>
+                    <li>Best Sellers</li>
+                    <li>Back in Stock</li>
+                </ul>
+            </div>
+        </div> {% endcomment %}
+    {% else %}
+        
+        
+    {% endif %}
+   
+</div>
