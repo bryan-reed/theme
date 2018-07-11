@@ -365,6 +365,9 @@
     border-bottom: 1px solid #ccc;
     cursor: pointer;
   }
+  &__top li.dropdown > ul li.dropdown-2 ul {
+    display: none;
+  }
   //Second layout
   &.layout-down {
     .main-nav__top {
@@ -403,6 +406,143 @@
       visibility: visible;
       background-color: #fff;
       z-index: 12;
+    }
+  }
+  //Desktop layout
+  @include media-query($medium-up) {
+    .mobile-nav-close {
+      display: none;
+    }
+    &.desktop-layout li ul,
+    &.desktop-layout li .mega-menu__container {
+      // display: none;
+      max-height: initial;
+      overflow: initial;
+      transition: 0.2s all ease-in;
+      left: 0;
+      top: 100%;
+      display: flex;
+    }
+    &.desktop-layout &__top {
+      transform: none;
+      height: initial;
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      position: relative;
+      flex-direction: row;
+      border-right: none;
+      max-height: initial;
+    }
+    &.desktop-layout &__top li.dropdown:hover > ul,
+    &.desktop-layout &__top li.dropdown ul:hover {
+      transform: translateY(0);
+      transition: 0.2s all ease-out;
+      opacity: 1;
+      visibility: visible;
+      left: 0;
+      top: 100%;
+      overflow: visible;
+    }
+    &.desktop-layout &__top li.dropdown > ul li.dropdown-2 ul {
+      transform: none;
+      position: absolute;
+      display: block;
+      top: -2px;
+      left: 100%;
+    }
+    &.desktop-layout &__top li.dropdown:hover > ul li.dropdown-2:hover > ul,
+    &.desktop-layout &__top li.dropdown ul:hover li.dropdown-2 ul:hover {
+      opacity: 1;
+      visibility: visible;
+      transform: none;
+      left: 100%;
+      top: -2px;
+    }
+    &.desktop-layout li ul {
+      max-height: initial;
+      overflow: hidden;
+      transition: all 0.25s ease-out;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      display: block;
+      opacity: 0;
+      visibility: hidden;
+    }
+    &__top li ul ul {
+      position: absolute;
+      visibility: hidden;
+      opacity: 0;
+      top: -2px;
+      left: 100%;
+      transform: none;
+      transition: none;
+    }
+    &.desktop-layout li.dropdown {
+      ul {
+        display: block;
+        padding-left: 0;
+        max-height: initial;
+        overflow: hidden;
+        visibility: hidden;
+        opacity: 0;
+        transform: translateY(50%);
+        transition: 0.2s all ease-in;
+        position: absolute;
+        border: 2px solid #000;
+        top: 100%;
+        width: auto;
+        min-width: 100%;
+        white-space: nowrap;
+        // width: 100%;
+        // min-width: 125px;
+        background-color: #fff;
+        padding: 0;
+      }
+    }
+    &__top li ul ul {
+      position: absolute;
+      visibility: hidden;
+      opacity: 0;
+      top: -2px;
+      left: 100%;
+      transform: none;
+      transition: none;
+    }
+    ul {
+      padding-left: 0;
+    }
+    li {
+      position: relative;
+    }
+    ul li {
+      text-align: left;
+    }
+    li ul {
+      display: block;
+    }
+    &.desktop-layout {
+      transform: none;
+      height: initial;
+      width: initial;
+      position: initial;
+      flex-direction: row;
+      max-height: initial;
+      overflow: visible;
+    }
+    &.desktop-layout li.dropdown a::after,
+    &.desktop-layout li.mega-menu a::after {
+      content: "";
+      display: none;
+      padding: 0;
+      cursor: pointer;
+    }
+    .mega-menu__container__col {
+      padding-left: 0;
     }
   }
 }

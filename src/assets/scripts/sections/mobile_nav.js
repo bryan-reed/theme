@@ -9,6 +9,7 @@ class mobileNav {
     this.dropdownsLeft = ".layout-left .mega-menu>a, .layout-left .dropdown>a";
     this.dropdownsDown = ".layout-down .mega-menu>a, .layout-down .dropdown>a";
     this.backBtn = ".side-back";
+    this.appended = ".appended-remove";
 
     //Start listening for events
     this.events();
@@ -33,6 +34,11 @@ class mobileNav {
   //   Open the mobile menu
   openMenu() {
     $(this.openMenuTrigger).toggleClass("mobile-open");
+    if (!$(this.openMenuTrigger).hasClass("mobile-open")) {
+      $(".main-nav__top").removeClass("sub-open");
+      $(".main-nav__top li").removeClass("open");
+      $(this.appended).remove();
+    }
     $(document)
       .find(this.menuContainer)
       .toggleClass("mobile-open");
@@ -70,9 +76,7 @@ class mobileNav {
     $(e.target)
       .closest(".sub-open")
       .removeClass("sub-open");
-    $(e.target)
-      .parent()
-      .remove();
+    $(this.appended).remove();
   }
   toggleSubNavDown(e) {
     e.preventDefault();
@@ -83,7 +87,7 @@ class mobileNav {
         .find(".mega-menu__container").length
     ) {
       let str =
-        '<div class="mega-menu__container__col"><div class="mega-menu__container__col__text"><a class="column_header side-back" href="">&lt; Back</a></div></div>';
+        '<div class="mega-menu__container__col appended-remove"><div class="mega-menu__container__col__text"><a class="column_header side-back" href="">&lt; Back</a></div></div>';
       $(e.target)
         .parent("li")
         .find(".mega-menu__container")
@@ -92,7 +96,9 @@ class mobileNav {
       $(e.target)
         .parent("li")
         .find("ul")
-        .prepend('<li class="side-back"><a href="">&lt; Back</a></li>');
+        .prepend(
+          '<li class="side-back appended-remove"><a href="">&lt; Back</a></li>'
+        );
     }
     $(e.target)
       .parent("li")

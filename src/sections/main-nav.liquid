@@ -1,7 +1,7 @@
 <section data-section-id="{{ section.id }}" data-section-type="navigation">
 {% comment %} Get mega menu blocks into new array, then join it into a string so we can then downcase it, then split back into array {% endcomment %}
 {% assign megaMenus = section.blocks | map: 'settings' | map: 'title' | join: ',' | downcase | split: ','  %}
-<nav class="main-nav container layout-{{section.settings.mobile_navigation_layout}}" role="navigation">
+<nav class="main-nav container layout-{{section.settings.mobile_navigation_layout}} desktop-layout" role="navigation">
     {% comment %} <div class="mobile-nav-close">
         &#10005;
     </div> {% endcomment %}
