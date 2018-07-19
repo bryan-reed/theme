@@ -1,0 +1,128 @@
+.image-grid {
+    // display: flex;
+    // flex-wrap: wrap;
+    // align-items: flex-start;
+    position: relative;
+    &::after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+    img {
+        width: 100%;
+        height: auto;
+    }
+    &__item {
+        &.f-left {
+            float: left;
+        }
+        &.f-right {
+            float: right;
+        }
+        &.new-row {
+            clear: both;
+        }
+        &.bottom-right-corner {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+        }
+        &.bottom-left-corner {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+        }
+        padding: 5px; // height: 350px;
+        float: left;
+        position: relative;
+        height: auto;
+        background-position: center;
+        background-size: cover;
+        background-clip: content-box;
+        display: flex;
+        flex-direction: column;
+        &:hover .grid-hover {
+            opacity: 1;
+        }
+        &.v-top {
+            justify-content: flex-start;
+        }
+        &.v-middle {
+            justify-content: center;
+        }
+        &.v-bottom {
+            justify-content: flex-end;
+        }
+    }
+    .grid-item--25m {
+        // flex-basis: 25%;
+        width: 25%;
+    }
+    .grid-item--50m {
+        // flex-basis: 50%;
+        width: 50%;
+    }
+    .grid-item--100m {
+        // flex-basis: 100%;
+        width: 100%;
+    }
+    @include media-query($medium-up) {
+        .grid-item--25 {
+            // flex-basis: 25%;
+            width: 25%;
+        }
+        .grid-item--33 {
+            // flex-basis: calc(100% / 3);
+            width: calc(100% / 3);
+        }
+        .grid-item--50 {
+            // flex-basis: 50%;
+            width: 50%;
+        }
+        .grid-item--66 {
+            // flex-basis: calc((100% / 3) * 2);
+            width: calc((100% / 3) * 2);
+        }
+        .grid-item--75 {
+            // flex-basis: 75%;
+            width: 75%;
+        }
+        .grid-item--100 {
+            // flex-basis: 100%;
+            width: 100%;
+        }
+    }
+    .grid-hover {
+        position: absolute;
+        background: rgba(0, 0, 0, 0.7);
+        padding: 5px;
+        top: 5px;
+        bottom: 5px;
+        right: 5px;
+        left: 5px;
+        color: #fff;
+        opacity: 0;
+        transition: 0.2s opacity ease-out 0.3s;
+        &__content {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            text-align: center;
+            width: 100%;
+        }
+    }
+    .grid-item {
+        width: calc(100% - 10px);
+        padding: 35px;
+        position: absolute;
+        &.h-middle {
+            text-align: center;
+        }
+        &.h-left {
+            text-align: left;
+        }
+        &.h-right {
+            text-align: right;
+        }
+    }
+}

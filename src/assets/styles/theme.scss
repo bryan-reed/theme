@@ -1,17 +1,18 @@
 @charset 'UTF-8';
-
 /**
  * [replace with theme name] | Built with Slate
  */
-@import "~normalize.css/normalize";
 
+@import "~normalize.css/normalize";
+@import "~slick-carousel/slick/slick.css";
+@import "./components/slick";
+// @import "~slick-carousel/slick/slick-theme.css";
+@import "./components/flexslider"; //Custom scss version of flexslider css
 // Settings
 @import "./variables";
-
 // Tools
 @import "./tools/mixins";
 @import "./tools/functions";
-
 // Core
 @import "./core/forms";
 @import "./core/helpers";
@@ -20,23 +21,23 @@
 @import "./core/responsive-tables";
 @import "./core/rte";
 @import "./core/typography";
-
 // Components
 @import "./components/buttons";
 @import "./components/hero-banner";
 @import "./components/icons";
 @import "./components/placeholders";
 @import "./components/responsive-images";
-
 // Sections
 @import "./sections/main-header";
 @import "./sections/main-nav";
 @import "./sections/mega-menu";
+@import "./sections/slideshow";
+@import "./sections/image-grid";
+@import "./sections/video";
 @import "./sections/blog-posts";
 @import "./sections/collection-list";
 @import "./sections/featured-collection";
 @import "./sections/image-with-text";
-
 // Templates
 @import "./templates/gift_card";
 @import "./templates/product";

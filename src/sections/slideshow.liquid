@@ -1,0 +1,128 @@
+<section data-section-id="{{ section.id }}" data-section-type="slideshow" class="slideshow">
+    <div class="slider flexslider" data-duration="{{section.settings.slide_duration}}000">
+            <ul class="slides">
+            {% for block in section.blocks %}
+                <li class="iterable-slides flex-slide-{{block.id}}" {{ block.shopify_attributes }} data-block="{{block.id}}" data-slide-index="{{ forloop.index | minus: 1}}">
+                    {% if block.settings.image != blank %}
+                    <picture>
+                      <!--[if IE 9]><video style="display: none;><![endif]-->
+                      <source
+                        data-srcset="{{ block.settings.m_image | img_url: '400x' }}"
+                        media="--small" />
+                      <source
+                        data-srcset="{{ block.settings.m_image | img_url: '800x' }} 400w"
+                        media="--medium" />
+                      <source
+                        data-srcset="{{ block.settings.image | img_url: '1000x' }}"
+                        media="--large" />
+                      <source
+                            data-srcset="{{ block.settings.image | img_url: '1600x' }}" />
+                        <!--[if IE 9]></video><![endif]-->
+                        <img
+                            src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+                            data-src="{{ block.settings.image | img_url: '1600x' }}"
+                            class="lazyload"
+                            alt="image with artdirection" />
+                    </picture>
+                    {% else %}
+                        {% capture current %}{% cycle 1, 2 %}{% endcapture %}
+                        {{ 'lifestyle-' | append: current | placeholder_svg_tag: 'placeholder-svg placeholder-svg--' }}
+                    {% endif %}
+                    <div class="caption caption--{{block.settings.animate}}">
+                        <h2 class="caption__heading">{{block.settings.title}}</h1>
+                        <div class="caption__text">{{block.settings.sub_head}}</div>
+                        <a href="{{block.settings.link}}" class="caption__btn">{{block.settings.link_text}}</a>
+                    </div>
+                </li>
+            {% else %}
+                    {% for i in (1..6) %}
+                         {% capture current %}{% cycle 1, 2 %}{% endcapture %}
+                        <li>{{ 'lifestyle-' | append: current | placeholder_svg_tag: 'placeholder-svg placeholder-svg--' }}</li>
+                    {% endfor %}
+            {% endfor %}
+            </ul>
+        </div>  
+</section>
+
+{% schema %}
+  {
+    "name": "Slideshow",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading",
+        "default": "Slideshow"
+      },
+      {
+        "type":   "range",
+        "id":     "slide_duration",
+        "min":       3,
+        "max":       7,
+        "step":      1,
+        "unit":      "s",
+        "label":     "Slide Duration in Seconds",
+        "default":   3
+    }
+    ],
+    "max_blocks": 6,
+    "blocks": [
+      {
+        "type": "slide",
+        "name": "Slide",
+        "settings": [
+          {
+            "id": "image",
+            "type": "image_picker",
+            "label": "Image"
+          },
+          {
+            "id": "m_image",
+            "type": "image_picker",
+            "label": "Mobile Image"
+          },
+          {
+              "id": "title",
+              "type": "text",
+              "label": "Heading"
+          },
+          {
+              "id": "sub_head",
+              "type": "text",
+              "label": "Sub Heading"
+          },
+          {
+              "id": "link_text",
+              "type": "text",
+              "label": "Link Text"
+          },
+          {
+              "id": "link",
+              "type": "url",
+              "label": "Link"
+          },
+          {
+              "id": "animate",
+              "type": "select",
+              "options": [
+                { "value": "none", "label": "None"},
+                { "value": "left", "label": "Left"},
+                { "value": "right", "label": "Right"}
+              ],
+              "default": "left",
+              "label": "Animate direction"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Slideshow",
+        "category": "Slideshow",
+        "settings": {
+          
+        }
+      }
+    ]
+  }
+{% endschema %}

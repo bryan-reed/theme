@@ -1,0 +1,57 @@
+<section data-section-id="{{ section.id }}" data-section-type="video" class="video{% unless section.settings.enable_full_width == 'y' %} container{% endunless %}">
+    {% if section.settings.video_url != blank %}
+        {% if section.settings.video_url.type == 'youtube' %}
+            <iframe src="https://www.youtube.com/embed/{{section.settings.video_url.id}}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        {% elsif section.settings.video_url.type == 'vimeo' %}
+            <iframe src="https://player.vimeo.com/video/{{section.settings.video_url.id}}" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+        {% endif %}
+    {% else %}
+           {{section.settings.embed_video}} 
+    {% endif %}
+</section>
+
+{% schema %}
+  {
+    "name": "Video",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading",
+        "default": "Video"
+      },
+      {
+          "type":"radio",
+          "id":"enable_full_width",
+          "label":"Full Width",
+          "options": [
+            { "value": "y", "label": "Yes" },
+            { "value": "n", "label": "No" }
+          ],
+          "default":   "n"
+        },
+      {
+        "id": "video_url",
+        "type": "video_url",
+        "label": "Video URL",
+        "accept": ["youtube", "vimeo"],
+        "default": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+    },
+    {
+        "type": "html",
+        "id": "embed_video",
+        "label": "Embed Script",
+        "default": "<div><p>Some HTML content</p></div>"
+        }
+    ],
+    "presets": [
+      {
+        "name": "Video",
+        "category": "Video",
+        "settings": {
+          
+        }
+      }
+    ]
+  }
+{% endschema %}

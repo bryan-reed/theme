@@ -1,0 +1,136 @@
+<section data-section-id="{{ section.id }}" data-section-type="image-grid" class="image-grid{% unless section.settings.enable_full_width == 'y' %} container{% endunless %}">
+    {% for block in section.blocks %}
+        <div class="image-grid__item grid-item--{{block.settings.desktop_size}} grid-item--{{block.settings.mobile_size}}m v-{{block.settings.title_v_position}} f-{{block.settings.align}}" {{ block.shopify_attributes }} >
+                {% if block.settings.image != blank %}
+                    <img data-src="{{ block.settings.image | img_url: '800x' }}" class="lazyload" />
+                {% else %}
+                    {% capture current %}{% cycle 1, 2 %}{% endcapture %}
+                    {{ 'lifestyle-' | append: current | placeholder_svg_tag: 'placeholder-svg placeholder-svg--' }}
+                {% endif %}
+                <div class="grid-item h-{{block.settings.title_h_position}}">
+                    <h2>{{block.settings.title}}</h2>
+                </div>
+                {% if block.settings.hover_text != blank %}
+                <div class="grid-hover">
+                    <div class="grid-hover__content">
+                       {{block.settings.hover_text}}
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+    {% endfor %}
+</section>
+
+{% schema %}
+  {
+    "name": "Image Grid",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading",
+        "default": "Image Grid"
+      },
+      {
+          "type":"radio",
+          "id":"enable_full_width",
+          "label":"Full Width",
+          "options": [
+            { "value": "y", "label": "Yes" },
+            { "value": "n", "label": "No" }
+          ],
+          "default":   "n"
+        }
+    ],
+    "max_blocks": 9,
+    "blocks": [
+      {
+        "type": "image",
+        "name": "Image",
+        "settings": [
+          {
+            "id": "image",
+            "type": "image_picker",
+            "label": "Image"
+          },
+          {
+              "id": "desktop_size",
+              "type": "select",
+              "options": [
+                { "value": "25", "label": "25%"},
+                { "value": "33", "label": "33%"},
+                { "value": "50", "label": "50%"},
+                { "value": "66", "label": "66%"},
+                { "value": "75", "label": "75%"},
+                { "value": "100", "label": "100%"}
+              ],
+              "default": "100",
+              "label": "Desktop Size"
+          },
+          {
+              "id": "mobile_size",
+              "type": "select",
+              "options": [
+                { "value": "25", "label": "25%"},
+                { "value": "50", "label": "50%"},
+                { "value": "100", "label": "100%"}
+              ],
+              "default": "100",
+              "label": "Mobile Size"
+          },
+          {
+          "type":"radio",
+          "id":"align",
+          "label":"Align",
+          "options": [
+            { "value": "left", "label": "Left" },
+            { "value": "right", "label": "Right" }
+          ],
+          "default":   "left"
+        },
+          {
+              "id": "title",
+              "type": "text",
+              "label": "Title"
+          },
+          {
+              "id": "title_v_position",
+              "type": "select",
+              "options": [
+                { "value": "top", "label": "Top"},
+                { "value": "middle", "label": "Middle"},
+                { "value": "bottom", "label": "Bottom"}
+              ],
+              "default": "middle",
+              "label": "Title Vertical Position"
+          },
+          {
+              "id": "title_h_position",
+              "type": "select",
+              "options": [
+                { "value": "left", "label": "Left"},
+                { "value": "middle", "label": "Middle"},
+                { "value": "right", "label": "Right"}
+              ],
+              "default": "middle",
+              "label": "Title Horizontal Position"
+          },
+          {
+              "id": "hover_text",
+              "type": "text",
+              "label": "Hover Text"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Image Grid",
+        "category": "Image Grid",
+        "settings": {
+          
+        }
+      }
+    ]
+  }
+{% endschema %}

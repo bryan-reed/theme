@@ -8,56 +8,103 @@
   Theme Store optional settings
   - Heading: title of the featured collection section
 {%- endcomment -%}
-<section class="featured-collection">
+<section class="featured-collection" data-section-id="{{ section.id }}" data-section-type="featured-collection">
   {% if section.settings.title != blank %}
     <h2 class="featured-collection__title">{{ section.settings.title | escape }}</h2>
   {% endif %}
 
   {%- assign collection = collections[section.settings.collection] -%}
-
-  {% for product in collection.products limit: 6 %}
-    <a href="{{ product.url | within: collection }}" class="featured-collection-item">
-      {% if product.featured_image != blank %}
-        <div class="featured-collection__image">
-          {% include 'responsive-image' with
-            image: product.featured_image,
-            max_width: 480,
-            max_height: 480
-          %}
-        </div>
-      {% endif %}
-
-      <p>{{ product.title | escape }}</p>
-      <span>
-        {% if product.compare_at_price > product.price %}
-          {% if product.price_varies %}
-            {%- assign sale_price = product.price | money -%}
-            {{ 'products.product.on_sale_from_html' | t: price: sale_price }}
-          {% else %}
-            {{ 'products.product.on_sale' | t }}
-            {{ product.price | money }}
-          {% endif %}
-        {% else %}
-          {% if product.price_varies %}
-            {%- assign price = product.price | money -%}
-            {{ 'products.product.from_text_html' | t: price: price }}
-          {% else %}
-            {{ product.price | money }}
-          {% endif %}
-        {% endif %}
-      </span>
-    </a>
+  {% assign productLimit = section.settings.number_of_products %}
+  {% if section.settings.layout == 'grid' %}
+    {% assign carouselClass = 'no-slicker' %}
   {% else %}
-    {% for i in (1..6) %}
-      <a href="#" class="featured-collection-item">
-        {% capture current %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
-        {{ 'product-' | append: current | placeholder_svg_tag: 'placeholder-svg placeholder-svg--small' }}
+    {% assign carouselClass = 'slicker' %}
+  {% endif %}
+  <div class="{{carouselClass}}" data-slick='{"slidesToShow": {{section.settings.products_per_row}}}'>
+    {% for product in collection.products limit: productLimit %}
+      {% comment %} <a href="{{ product.url | within: collection }}" class="featured-collection-item">
+        {% if product.featured_image != blank %}
+          <div class="featured-collection__image">
+            {% include 'responsive-image' with
+              image: product.featured_image,
+              max_width: 480,
+              max_height: 480
+            %}
+          </div>
+        {% endif %}
 
-        <p>{{ 'homepage.onboarding.product_title' | t }}</p>
-        <p>{{ 1999 | money }}</p>
-      </a>
+        <p>{{ product.title | escape }}</p>
+        <span>
+          {% if product.compare_at_price > product.price %}
+            {% if product.price_varies %}
+              {%- assign sale_price = product.price | money -%}
+              {{ 'products.product.on_sale_from_html' | t: price: sale_price }}
+            {% else %}
+              {{ 'products.product.on_sale' | t }}
+              {{ product.price | money }}
+            {% endif %}
+          {% else %}
+            {% if product.price_varies %}
+              {%- assign price = product.price | money -%}
+              {{ 'products.product.from_text_html' | t: price: price }}
+            {% else %}
+              {{ product.price | money }}
+            {% endif %}
+          {% endif %}
+        </span>
+      </a> {% endcomment %}
+      <div class="products-{{section.settings.products_per_row}}">
+          <div class="featured-collection__product">
+            <div class="product-image">
+            <div class="first">
+              <img src="{{product.featured_image | img_url: '400x'}}" alt="Test" />
+            </div>
+            {% if product.images[1] %}
+              <div class="second">
+              <img src="{{product.images[1] | img_url: '400x'}}" alt="Test" />
+              </div>
+            {% endif %}
+            </div>
+              <div class="product-content {{section.settings.content_align}}">
+                {% if section.settings.show_title %}
+                  <h3>{{product.title}}</h3>
+                {% endif %}
+                {% if section.settings.show_vendor %}
+                  <h3>{{product.vendor}}'</h3>
+                {% endif %}
+                {% if section.settings.show_price %}
+                  <span class="price">{{product.price | money}}</span>
+                {% endif %}  
+                {% if section.settings.show_swatches %}
+                  {% include 'swatches' %}
+                {% endif %}   
+              </div>
+          </div>
+      </div>
+      
+    {% else %}
+      {% for i in (1..6) %}
+      <div>
+          <div class="featured-collection__product">
+              {% capture current %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
+              {{ 'product-' | append: current | placeholder_svg_tag: 'placeholder-svg placeholder-svg--small' }}  
+              <div class="product-content {{section.settings.content_align}}">
+                {% if section.settings.show_title %}
+                  <h3>{{ 'homepage.onboarding.product_title' | t }}</h3>
+                {% endif %}
+                {% if section.settings.show_vendor %}
+                  <h3>Vendor</h3>
+                {% endif %}
+                {% if section.settings.show_price %}
+                  <span class="price">{{ 1999 | money }}</span>
+                {% endif %}   
+              </div>
+          </div>
+      </div>
+      {% endfor %}
     {% endfor %}
-  {% endfor %}
+    </ul>
+  </div>
 </section>
 
 {% schema %}
@@ -74,6 +121,71 @@
         "id": "collection",
         "type": "collection",
         "label": "Collection"
+      },
+      {
+        "type":   "range",
+        "id":     "number_of_products",
+        "min":       1,
+        "max":       50,
+        "step":      1,
+        "unit":      "p",
+        "label":     "Number of Products",
+        "default":   8
+    },
+    {
+        "type":   "range",
+        "id":     "products_per_row",
+        "min":       1,
+        "max":       6,
+        "step":      1,
+        "unit":      "p",
+        "label":     "Products Per Row",
+        "default":   3
+    },
+    {
+          "type":"radio",
+          "id":"layout",
+          "label":"Layout",
+          "options": [
+            { "value": "grid", "label": "Grid" },
+            { "value": "carousel", "label": "Carousel" }
+          ],
+          "default":   "grid"
+        },
+        {
+        "type":      "checkbox",
+        "id":        "show_title",
+        "label":     "Show Title",
+        "default":   true
+      },
+        {
+        "type":      "checkbox",
+        "id":        "show_vendor",
+        "label":     "Show Vendor",
+        "default":   true
+      },
+       {
+        "type":      "checkbox",
+        "id":        "show_price",
+        "label":     "Show Price",
+        "default":   true
+      },
+        {
+        "type":      "checkbox",
+        "id":        "show_swatches",
+        "label":     "Show Swatches",
+        "default":   false
+      },
+      {
+        "id": "content_align",
+        "type": "select",
+        "options": [
+          { "value": "left", "label": "Left"},
+          { "value": "center", "label": "Center"},
+          { "value": "right", "label": "Right"}
+        ],
+        "default": "left",
+        "label": "Content Align"
       }
     ],
     "presets": [

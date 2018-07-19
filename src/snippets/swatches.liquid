@@ -1,0 +1,13 @@
+{% for product_option in product.options_with_values %}
+    {% assign optionName = product_option.name | downcase %}
+    {% if optionName == 'color' %}
+        <div class="swatch">
+            <span>Available In</span>
+            <div class="chips">
+            {% for value in product_option.values %}
+                <div class="chip" style="background-color:{{value}}"></div>
+            {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+{% endfor %}

@@ -1,3 +1,9 @@
+window.lazySizesConfig = window.lazySizesConfig || {};
+window.lazySizesConfig.customMedia = {
+  "--small": "(max-width: 480px)",
+  "--medium": "(max-width: 900px)",
+  "--large": "(max-width: 1400px)"
+};
 import "lazysizes/plugins/object-fit/ls.object-fit";
 import "lazysizes/plugins/parent-fit/ls.parent-fit";
 import "lazysizes/plugins/rias/ls.rias";
