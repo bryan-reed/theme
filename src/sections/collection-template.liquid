@@ -1,0 +1,226 @@
+<div data-section-id="{{ section.id }}" data-section-type="collection-template" class="collection-template collection" data-collection="{{collection.handle}}" data-num-products="{{collection.products_count}}" data-url="{{collection.url}}">
+    {% if section.settings.show_collection_banner %}
+        <div class="collection__header{% unless section.settings.banner_full_width%} container{% endunless %}">
+        {% if collection.image %}
+            <img src="{{ collection.image | img_url: '1600x' }}" alt="{{collection.title}}"/>
+        {% endif %}
+        <!-- TODO: Use responsive images here for loading smaller images on smaller screens. Cannot use art direction -->
+            {% comment %} {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg placeholder-svg--' }} {% endcomment %}
+        </div>
+    {% endif %}
+    {% if section.settings.show_collection_title %}
+        <h2 class="container">{{collection.title}}</h2>
+    {% endif %}
+    <div class="collection__body container">
+        {% if section.settings.sidebar %}
+            <div class="collection__navigation">
+                <div class="mobile_nav">
+                    <div class="icon icon--sort"></div>
+                </div>
+                <div class="full_nav">
+                    <h4>{{section.settings.sidebar_title}}</h4>
+                    <ul>
+                    {% for block in section.blocks %}
+                       {% include block.type %}
+                    {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        {% endif %}
+        <div class="collection__products">
+            {% assign number = section.settings.products_per_page %}
+            {% paginate collection.products by number %}
+                {% if paginate.pages > 1 %}
+                    {% include 'pagination' %}
+                {% endif %}
+                {% for product in collection.products %}
+                    <div class="product product--{{section.settings.products_per_row}}">
+                        <!-- Image -->
+                        <a href="{{ product.url | within: collection }}"><img src="{{product.featured_image | img_url: '400x'}}" alt="{{product.featured_image.alt}}" /></a>
+                        <div class="quick_view_link btn" data-product="{{product.handle}}" data-variant="{{product.selected_or_first_available_variant.id}}">Quick View</div>
+                        <div class="product-content">
+                            <h5>{{product.vendor}}</h5>
+                            <a href="{{ product.url | within: collection }}"><h3>{{product.title}}</h3></a>
+                            <span class="price">{{product.price | money}}</span>
+                            {% include 'swatches' %}
+                        </div>
+                    </div>
+                {% endfor %}
+                {% if paginate.pages > 1 %}
+                    {% include 'pagination' %}
+                {% endif %}
+            {% endpaginate %}
+        </div>
+    </div>
+    <div class="collection__quickview" data-vendor="{{section.settings.quick_view_vendor}}" data-option1="{{section.settings.quick_view_one}}" data-option2="{{section.settings.quick_view_two}}" data-option3="{{section.settings.quick_view_three}}" data-swatch-style="{{section.settings.quick_view_swatch_style}}"></div>
+</div>
+{% schema %}
+{
+    "name": "Collection Pages",
+	"max_blocks" : 6,
+    "settings": [
+        {
+            "type": "checkbox",
+            "id": "show_collection_title",
+            "label": "Show collection title",
+            "default": true
+        },
+        {
+            "type": "checkbox",
+            "id": "show_collection_banner",
+            "label": "Show collection banner",
+            "default": true
+        },
+        {
+        "type": "checkbox",
+        "id": "banner_full_width",
+        "label": "Banner Full Width",
+        "default": true
+      },
+      {
+        "type":      "range",
+        "id":        "products_per_row",
+        "min":       2,
+        "max":        6,
+        "step":       1,
+        "label":     "Products per row",
+        "default":   3
+      },
+      {
+        "type":      "range",
+        "id":        "products_per_page",
+        "min":       2,
+        "max":        50,
+        "step":       1,
+        "label":     "Products per page",
+        "default":   46
+      },
+      {
+        "type": "checkbox",
+        "id": "sidebar",
+        "label": "Show sidebar",
+        "default": true
+      },
+      {
+          "type": "text",
+          "id": "sidebar_title",
+          "label": "Sidebar Title",
+          "default": "Shop By"
+      },
+      {
+          "type": "header",
+          "content": "Quick View Settings"
+      },
+      {
+        "type": "checkbox",
+        "id": "quick_view_vendor",
+        "label": "Show Product Vendor",
+        "default": true
+      },
+      {
+            "type": "select",
+            "id": "quick_view_one",
+            "label": "Variant Option 1",
+            "options": [
+                { "value": "dropdown", "label": "Drop down"},
+                { "value": "swatch", "label": "Swatch"}
+            ],
+            "default": "dropdown"
+        },
+      {
+            "type": "select",
+            "id": "quick_view_two",
+            "label": "Variant Option 2",
+            "options": [
+                { "value": "dropdown", "label": "Drop down"},
+                { "value": "swatch", "label": "Swatch"}
+            ],
+            "default": "dropdown"
+        },
+      {
+            "type": "select",
+            "id": "quick_view_three",
+            "label": "Variant Option 3",
+            "options": [
+                { "value": "dropdown", "label": "Drop down"},
+                { "value": "swatch", "label": "Swatch"}
+            ],
+            "default": "dropdown"
+        },
+        {
+            "type":      "radio",
+            "id":        "quick_view_swatch_style",
+            "label":     "Swatch Style",
+            "options": [
+                { "value": "circle", "label": "Circle" },
+                { "value": "square", "label": "Square" }
+            ],
+            "default":   "circle"
+        }
+    ],
+   "blocks":[  
+      {  
+         "type":"filter_by_menu",
+         "name":"Menu",
+         "settings":[  
+            {
+               "type": "link_list",
+               "id": "side_nav",
+               "label": "Sidebar menu"
+            },
+           {
+            "type": "text",
+            "id": "title",
+            "label": "Menu title",
+            "default": "Explore"
+           }
+         ]
+      },
+      {  
+         "type":"filter_by_vendor",
+         "name":"Vendor list",
+		 "limit": 1,
+         "settings":[  
+          {
+          "type": "text",
+          "id": "title",
+          "label": "Vendor list title",
+          "default": "Shop by Designer"
+          }
+         ]
+      },
+      {  
+         "type":"sort_by",
+         "name":"Sort by",
+		 "limit": 1,
+         "settings":[  
+          {
+          "type": "text",
+          "id": "sort_by_title",
+          "label": "Sort by title",
+          "default": "Sort"
+          }
+         ]
+      },
+      {  
+         "type":"filter_by_tag",
+         "name":"Tag Filter",
+		 "limit": 3,
+         "settings":[  
+          {
+          "type": "text",
+          "id": "title",
+          "label": "Filter by title",
+          "default": "Filter by"
+          },
+          {
+          "type": "textarea",
+          "id": "filter_by",
+          "label": "Tag filter",
+          "info": "Separate tags by comma"
+          }
+         ]
+      }
+   ]
+  }
+{% endschema %} 

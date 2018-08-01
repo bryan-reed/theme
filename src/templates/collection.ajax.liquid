@@ -1,0 +1,21 @@
+{% layout none %}
+{% paginate collection.products by 1000 %}
+
+{% capture all_items %}
+{% for p in collection.products %}
+{% for v in p.variants %}
+{ "index":{% increment count2%}, "id":"{{ p.id }}", "variantid":"{{v.id}}", "title":"{{p.title}}", "variant_title":"{{v.title}}" }`~`
+{% endfor %}
+{% endfor %}
+{% endcapture %}
+{% endpaginate %}
+
+{% assign size = all_items | size | minus: 3 %}
+{% assign somearray = all_items | slice: 0, size | split: '`~`' %}
+[
+{% for i in somearray %}
+{% increment i2 %}
+{{i}}
+{% unless forloop.last %},{% endunless %}
+{% endfor %}
+]

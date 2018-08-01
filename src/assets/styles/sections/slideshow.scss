@@ -6,12 +6,12 @@
     width: 100%;
   }
 }
+
 .slider {
   border: none;
   margin: 0;
   li {
-    position: relative;
-    // max-height: 600px;
+    position: relative; // max-height: 600px;
   }
   .flex-direction-nav {
     position: absolute;
@@ -29,6 +29,15 @@
     position: relative;
     text-align: center;
   }
+  .caption * {
+    margin: 0;
+    margin-bottom: 15px;
+  }
+  .caption__btn {
+    padding: 10px;
+    display: inline-block;
+    width: auto;
+  }
   @include media-query($medium-up) {
     .caption--left,
     .caption--none {
@@ -37,9 +46,6 @@
       left: 60px;
       transform: translateX(-300px);
       opacity: 0;
-      &__btn {
-        padding: 5px;
-      }
     }
     .caption--right {
       position: absolute;

@@ -1,0 +1,65 @@
+.featured-text {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    flex-direction: column;
+    @include media-query($medium-up) {
+        flex-direction: row;
+    }
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        text-align: center;
+        flex-basis: 100%;
+        margin-bottom: 15px;
+    }
+    .content {
+        &.border-normal {
+            border: 1px solid #000;
+            outline: none;
+        }
+        &.border-double {
+            border: 1px solid #000;
+            outline: 1px solid #000;
+            outline-offset: 5px;
+        }
+        &.border-dashed {
+            border: 1px dashed #000;
+            outline: none;
+        }
+        &.border-dotted {
+            border: 1px dotted #000;
+            outline: none;
+        }
+        &.border-none {
+            border: none;
+            outline: none;
+        }
+        &.border--1 {
+            border-width: 1px;
+            outline-width: 1px;
+        }
+        &.border--2 {
+            border-width: 2px;
+            outline-width: 2px;
+        }
+        &.border--3 {
+            border-width: 3px;
+            outline-width: 3px;
+        }
+        &.border--4 {
+            border-width: 4px;
+            outline-width: 4px;
+        }
+        &.border--5 {
+            border-width: 5px;
+            outline-width: 5px;
+        }
+        position: relative;
+        padding: 10px;
+        margin: 15px;
+        flex: 1;
+    }
+}

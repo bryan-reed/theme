@@ -51,7 +51,8 @@
         "one": "{{ count }} result for \"{{ terms }}\"",
         "other": "{{ count }} results for \"{{ terms }}\""
       },
-      "no_results_html": "Please try a different search term or go back to the <a href=\"/\">homepage</a>."
+      "no_results_html":
+        "Please try a different search term or go back to the <a href=\"/\">homepage</a>."
     },
     "newsletter_form": {
       "newsletter_email": "Join our mailing list",
@@ -279,7 +280,8 @@
       "on_sale_from_html": "On Sale from {{ price }}",
       "from_text_html": "From {{ price }}",
       "quantity": "Quantity",
-      "add_to_cart": "Add to Cart"
+      "add_to_cart": "Add to Cart",
+      "added_to_cart": "Added to Cart"
     }
   },
   "gift_cards": {

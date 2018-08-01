@@ -10,7 +10,7 @@
 {%- endcomment -%}
 <section class="featured-collection" data-section-id="{{ section.id }}" data-section-type="featured-collection">
   {% if section.settings.title != blank %}
-    <h2 class="featured-collection__title">{{ section.settings.title | escape }}</h2>
+    <h2 class="section_title featured-collection__title">{{ section.settings.title | escape }}</h2>
   {% endif %}
 
   {%- assign collection = collections[section.settings.collection] -%}
@@ -56,14 +56,14 @@
       <div class="products-{{section.settings.products_per_row}}">
           <div class="featured-collection__product">
             <div class="product-image">
-            <div class="first">
-              <img src="{{product.featured_image | img_url: '400x'}}" alt="Test" />
-            </div>
-            {% if product.images[1] %}
-              <div class="second">
-              <img src="{{product.images[1] | img_url: '400x'}}" alt="Test" />
+              <div class="first">
+                <img src="{{product.featured_image | img_url: '400x'}}" alt="Test" />
               </div>
-            {% endif %}
+              {% if product.images[1] %}
+                <div class="second">
+                  <img src="{{product.images[1] | img_url: '400x'}}" alt="Test" />
+                </div>
+              {% endif %}
             </div>
               <div class="product-content {{section.settings.content_align}}">
                 {% if section.settings.show_title %}
@@ -83,24 +83,29 @@
       </div>
       
     {% else %}
+      
       {% for i in (1..6) %}
-      <div>
-          <div class="featured-collection__product">
-              {% capture current %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
-              {{ 'product-' | append: current | placeholder_svg_tag: 'placeholder-svg placeholder-svg--small' }}  
-              <div class="product-content {{section.settings.content_align}}">
-                {% if section.settings.show_title %}
-                  <h3>{{ 'homepage.onboarding.product_title' | t }}</h3>
-                {% endif %}
-                {% if section.settings.show_vendor %}
-                  <h3>Vendor</h3>
-                {% endif %}
-                {% if section.settings.show_price %}
-                  <span class="price">{{ 1999 | money }}</span>
-                {% endif %}   
-              </div>
-          </div>
-      </div>
+        <div class="products-{{section.settings.products_per_row}}">
+        <div class="featured-collection__product">
+            <div class="product-image">
+            <div class="first">
+            {% capture current %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
+            {{ 'product-' | append: current | placeholder_svg_tag: 'placeholder-svg placeholder-svg--small' }}  
+            </div>
+            </div>
+            <div class="product-content {{section.settings.content_align}}">
+              {% if section.settings.show_title %}
+                <h3>{{ 'homepage.onboarding.product_title' | t }}</h3>
+              {% endif %}
+              {% if section.settings.show_vendor %}
+                <h3>Vendor</h3>
+              {% endif %}
+              {% if section.settings.show_price %}
+                <span class="price">{{ 1999 | money }}</span>
+              {% endif %}   
+            </div>
+        </div>
+        </div>
       {% endfor %}
     {% endfor %}
     </ul>
@@ -130,7 +135,7 @@
         "step":      1,
         "unit":      "p",
         "label":     "Number of Products",
-        "default":   8
+        "default":   6
     },
     {
         "type":   "range",
@@ -150,7 +155,7 @@
             { "value": "grid", "label": "Grid" },
             { "value": "carousel", "label": "Carousel" }
           ],
-          "default":   "grid"
+          "default":   "carousel"
         },
         {
         "type":      "checkbox",
@@ -184,7 +189,7 @@
           { "value": "center", "label": "Center"},
           { "value": "right", "label": "Right"}
         ],
-        "default": "left",
+        "default": "center",
         "label": "Content Align"
       }
     ],

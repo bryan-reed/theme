@@ -1,0 +1,9 @@
+{% comment %} Make sure there are some tags before outputting anything {% endcomment %}
+<li class="top-lvl">
+    <span>{{block.settings.title}}</span>
+    <ul>
+    {% for vendor in collection.all_vendors %}
+        <li>{{ vendor | link_to_vendor }}</li>
+    {% endfor %}
+    </ul>
+</li>

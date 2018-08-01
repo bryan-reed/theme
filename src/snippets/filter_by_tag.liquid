@@ -1,0 +1,30 @@
+{% comment %} Make sure there are some tags before outputting anything {% endcomment %}
+{% comment %} Get block settings tags {% endcomment %}
+{% assign tags = block.settings.filter_by | split: ',' %}
+{% assign collectionTags = collection.tags | join: ',' | downcase | split: ',' %}
+{% assign currentTags = current_tags | join: ',' | downcase | split: ',' %}
+{% assign filteredTags = '' %}
+{% assign filteredSection = false %}
+{% for t in tags %}
+    {% assign tag = t |  strip | downcase %}
+    {% if currentTags contains tag %}
+        {% capture fTag %}<li><label><input type="checkbox" value="{{t | strip}}" class="tag_filter" name="filter_by[]" checked /> {{t | strip}}</label></li>{% endcapture %}
+        {% assign filteredTags = filteredTags | append: fTag %}
+        {% assign filteredSection = true %}
+    {% endif %}
+{% endfor %}
+<li class="top-lvl{%if filteredSection == true%} open{% endif %}">
+    <span>{{block.settings.title}}</span>
+    <ul class="">
+    {% if filteredSection == false %}
+        {% for t in tags %}
+            {% assign tag = t |  strip | downcase %}
+            {% if collectionTags contains tag %}
+                <li><label><input type="checkbox" value="{{ t | strip }}" class="tag_filter" name="filter_by[]" /> {{t | strip}}</label></li>
+            {% endif %}
+        {% endfor %}
+    {% else %}
+        {{filteredTags}}
+    {% endif %}
+    </ul>
+</li>

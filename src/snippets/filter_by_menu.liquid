@@ -1,0 +1,8 @@
+<li class="top-lvl">
+    <span>{{block.settings.title}}</span>
+    <ul>
+    {% for link in linklists[block.settings.side_nav].links %}
+        <li><a href="{{ link.url }}">{{link.title}}</a></li>
+    {% endfor %}
+    </ul>
+</li>

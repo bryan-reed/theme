@@ -1,5 +1,5 @@
 {
-  "current": "Default",
+  "current": "bryan-default",
   "presets": {
     "Default": {
       "sections": {
@@ -40,6 +40,18 @@
     },
     "bryan-default": {
       "sections": {
+        "slideshow": {
+          "type": "slideshow",
+          "blocks": {
+            "slide-1": {
+              "type": "slide"
+            },
+            "slide-2": {
+              "type": "slide"
+            }
+          },
+          "block_order": ["slide-1", "slide-2"]
+        },
         "collection-list": {
           "type": "collection-list",
           "blocks": {
@@ -69,11 +81,7 @@
           "type": "featured-product"
         }
       },
-      "content_for_index": [
-        "collection-list",
-        "featured-collection",
-        "featured-product"
-      ]
+      "content_for_index": ["slideshow"]
     }
   }
 }

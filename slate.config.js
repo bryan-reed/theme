@@ -29,7 +29,7 @@ module.exports = {
           ]
         }
       },
-      dev: {
+      prod: {
         resolve: { alias },
         module: {
           rules: [

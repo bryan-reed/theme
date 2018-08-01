@@ -7,7 +7,6 @@
  */
 
 import $ from "jquery";
-import slick from "slick-carousel";
 import Variants from "@shopify/theme-variants";
 import { formatMoney } from "@shopify/theme-currency";
 import sections from "@shopify/theme-sections";
@@ -39,28 +38,6 @@ const cssClasses = {
 
 sections.register("product", {
   onLoad() {
-    let opts = {};
-    let slickSelector = "";
-    if ($(".alt_images").length) {
-      slickSelector = ".alt_images";
-      opts = {
-        slidesToScroll: 1,
-        slidesToShow: 3
-      };
-    } else {
-      slickSelector = ".product__alt_images";
-      opts = {
-        dots: false,
-        infinite: false,
-        vertical: true,
-        slidesToShow: 3,
-        slidesToScroll: 1,
-        verticalSwiping: true,
-        prevArrow: '<button class="slick-prev"><span>&#10094;</span></button>',
-        nextArrow: '<button class="slick-next"><span>&#10095;</span></button>'
-      };
-    }
-    $(slickSelector).slick(opts);
     // Stop parsing if we don't have the product json script tag when loading
     // section in the Theme Editor
     if (!$(selectors.productJson, this.$container).html()) {

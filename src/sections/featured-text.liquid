@@ -1,0 +1,103 @@
+<section data-section-id="{{ section.id }}" data-section-type="featured-text" class="featured-text container">
+   <h{{section.settings.title_size | plus: '1'}}>{{section.settings.title}}</h{{section.settings.title_size | plus: '1'}}>
+   {% for block in section.blocks %}
+       <div class="content border-{{block.settings.border}} border--{{block.settings.border_size}}" {{ block.shopify_attributes }} data-block="{{block.id}}">
+            <div class="rte">{{block.settings.content}}</div>
+        </div>
+   {% endfor %}
+</section>
+
+{% schema %}
+  {
+    "name": "Featured Text",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading",
+        "default": "Featured Text Title"
+      },
+      {
+            "type":   "range",
+            "id":     "title_size",
+            "min":       1,
+            "max":       5,
+            "step":      1,
+            "unit":      ".",
+            "label":     "Title Size",
+            "default":   1
+        }
+    ],
+    "max_blocks": 4,
+    "blocks": [
+      {
+        "type": "column",
+        "name": "Column",
+        "settings": [
+          {
+            "id": "content",
+            "type": "richtext",
+            "label": "Column Content"
+          },
+          {
+              "id": "border",
+              "type": "select",
+              "options": [
+                { "value": "none", "label": "None"},
+                { "value": "normal", "label": "Normal"},
+                { "value": "double", "label": "Double"},
+                { "value": "dotted", "label": "Dotted"},
+                { "value": "dashed", "label": "Dashed"}
+              ],
+              "default": "none",
+              "label": "Border"
+          },
+      {
+            "type":   "range",
+            "id":     "border_size",
+            "min":       1,
+            "max":       5,
+            "step":      1,
+            "unit":      "px",
+            "label":     "Border Size",
+            "default":   1
+        }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Featured Text",
+        "category": "Featured Text",
+        "settings": {
+          "title": "Featured Text Title"
+        },
+        "blocks": [
+          {
+            "type": "column",
+            "settings": {
+              "content": "<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Itaque nulla architecto nemo debitis consectetur dolore, facilis fugiat blanditiis quaerat magnam, dicta quos recusandae eum dolores, libero cum! Quos, itaque odio.</p>",
+              "border": "normal",
+              "border_size": 2
+            }
+          },
+          {
+            "type": "column",
+            "settings": {
+              "content": "<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Itaque nulla architecto nemo debitis consectetur dolore, facilis fugiat blanditiis quaerat magnam, dicta quos recusandae eum dolores, libero cum! Quos, itaque odio.</p>",
+              "border": "double"
+            }
+          },
+          {
+            "type": "column",
+            "settings": {
+              "content": "<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Itaque nulla architecto nemo debitis consectetur dolore, facilis fugiat blanditiis quaerat magnam, dicta quos recusandae eum dolores, libero cum! Quos, itaque odio.</p>",
+              "border": "dashed",
+              "border_size": 2
+            }
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

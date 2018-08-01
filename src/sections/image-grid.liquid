@@ -1,11 +1,14 @@
 <section data-section-id="{{ section.id }}" data-section-type="image-grid" class="image-grid{% unless section.settings.enable_full_width == 'y' %} container{% endunless %}">
+{% if section.settings.title != blank %}
+    <h2 class="section_title">{{ section.settings.title | escape }}</h2>
+  {% endif %}
     {% for block in section.blocks %}
         <div class="image-grid__item grid-item--{{block.settings.desktop_size}} grid-item--{{block.settings.mobile_size}}m v-{{block.settings.title_v_position}} f-{{block.settings.align}}" {{ block.shopify_attributes }} >
                 {% if block.settings.image != blank %}
                     <img data-src="{{ block.settings.image | img_url: '800x' }}" class="lazyload" />
                 {% else %}
-                    {% capture current %}{% cycle 1, 2 %}{% endcapture %}
-                    {{ 'lifestyle-' | append: current | placeholder_svg_tag: 'placeholder-svg placeholder-svg--' }}
+                    {% capture current %}{% cycle 1, 2,3,4,5,6 %}{% endcapture %}
+                    {{ 'collection-' | append: current | placeholder_svg_tag: 'placeholder-svg placeholder-svg--' }}
                 {% endif %}
                 <div class="grid-item h-{{block.settings.title_h_position}}">
                     <h2>{{block.settings.title}}</h2>
@@ -128,8 +131,61 @@
         "name": "Image Grid",
         "category": "Image Grid",
         "settings": {
-          
-        }
+          "title": "Image Grid"
+        },
+        "blocks": [
+          {
+            "type": "image",
+            "settings": {
+              "desktop_size": "66",
+              "mobile_size": "50"
+            }
+          },
+          {
+            "type": "image",
+            "settings": {
+              "desktop_size": "33",
+              "mobile_size": "50",
+              "title": "Image Title",
+              "title_h_position": "right",
+              "title_v_position": "bottom"
+            }
+          },
+          {
+            "type": "image",
+            "settings": {
+              "desktop_size": "33",
+              "mobile_size": "50",
+              "title": "Image Title",
+              "title_h_position": "left",
+              "title_v_position": "middle"
+            }
+          },
+          {
+            "type": "image",
+            "settings": {
+              "desktop_size": "50",
+              "mobile_size": "50",
+              "title": "Image Title"
+            }
+          },
+          {
+            "type": "image",
+            "settings": {
+              "desktop_size": "50",
+              "mobile_size": "50",
+              "title": "Image Title"
+            }
+          },
+          {
+            "type": "image",
+            "settings": {
+              "desktop_size": "100",
+              "mobile_size": "50",
+              "title": "Image Title"
+            }
+          }
+        ]
       }
     ]
   }

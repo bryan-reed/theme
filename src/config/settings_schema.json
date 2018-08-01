@@ -28,6 +28,24 @@
         "id": "color_main_bg",
         "label": "Background",
         "default": "#fff"
+      },
+      {
+        "type": "color",
+        "id": "color_button_bg",
+        "label": "Button Background Color",
+        "default": "#000"
+      },
+      {
+        "type": "color",
+        "id": "color_button_text",
+        "label": "Button Text Color",
+        "default": "#fff"
+      },
+      {
+        "type": "color",
+        "id": "link_color",
+        "label": "Link Color",
+        "default": "#000"
       }
     ]
   },
@@ -59,7 +77,8 @@
         "type": "image_picker",
         "id": "share_image",
         "label": "Image",
-        "info": "Shown when sharing a link on social media. [Learn more](https://help.shopify.com/manual/using-themes/troubleshooting/showing-social-media-thumbnail-images/) about image thumbnails."
+        "info":
+          "Shown when sharing a link on social media. [Learn more](https://help.shopify.com/manual/using-themes/troubleshooting/showing-social-media-thumbnail-images/) about image thumbnails."
       },
       {
         "type": "header",

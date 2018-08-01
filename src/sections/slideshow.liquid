@@ -1,4 +1,7 @@
 <section data-section-id="{{ section.id }}" data-section-type="slideshow" class="slideshow">
+{% if section.settings.title != blank %}
+    <h2 class="section_title">{{ section.settings.title | escape }}</h2>
+  {% endif %}
     <div class="slider flexslider" data-duration="{{section.settings.slide_duration}}000">
             <ul class="slides">
             {% for block in section.blocks %}
@@ -31,7 +34,7 @@
                     <div class="caption caption--{{block.settings.animate}}">
                         <h2 class="caption__heading">{{block.settings.title}}</h1>
                         <div class="caption__text">{{block.settings.sub_head}}</div>
-                        <a href="{{block.settings.link}}" class="caption__btn">{{block.settings.link_text}}</a>
+                        <a href="{{block.settings.link}}" class="caption__btn btn">{{block.settings.link_text}}</a>
                     </div>
                 </li>
             {% else %}
@@ -62,7 +65,7 @@
         "step":      1,
         "unit":      "s",
         "label":     "Slide Duration in Seconds",
-        "default":   3
+        "default":   5
     }
     ],
     "max_blocks": 6,
@@ -120,8 +123,26 @@
         "name": "Slideshow",
         "category": "Slideshow",
         "settings": {
-          
-        }
+          "title": "Slideshow"
+        },
+        "blocks": [
+          {
+            "type": "slide",
+            "settings": {
+              "title": "Slide 1 Here",
+              "sub_head": "Slide 1 Heading",
+              "link_text": "Slide 1 Link"
+            }
+          },
+          {
+            "type": "slide",
+            "settings": {
+              "title": "Slide 2 Here",
+              "sub_head": "Slide 2 Heading",
+              "link_text": "Slide 2 Link"
+            }
+          }
+        ]
       }
     ]
   }

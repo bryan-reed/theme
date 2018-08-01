@@ -1,9 +1,12 @@
 <section data-section-id="{{ section.id }}" data-section-type="video" class="video{% unless section.settings.enable_full_width == 'y' %} container{% endunless %}">
+{% if section.settings.title != blank %}
+    <h2 class="section_title">{{ section.settings.title | escape }}</h2>
+  {% endif %}
     {% if section.settings.video_url != blank %}
         {% if section.settings.video_url.type == 'youtube' %}
             <iframe src="https://www.youtube.com/embed/{{section.settings.video_url.id}}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
         {% elsif section.settings.video_url.type == 'vimeo' %}
-            <iframe src="https://player.vimeo.com/video/{{section.settings.video_url.id}}" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+            <iframe src="https://player.vimeo.com/video/{{section.settings.video_url.id}}" frameborder="0" allowfullscreen></iframe>
         {% endif %}
     {% else %}
            {{section.settings.embed_video}} 

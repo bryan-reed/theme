@@ -1,23 +1,7 @@
-<footer>
+<footer class="footer" data-section-type="footer" data-section-id="{{ section.id }}">
 
   {%- assign social_accounts = 'Facebook, Twitter, Pinterest, Instagram, Snapchat, Tumblr, YouTube, Vimeo,' | split: ', ' -%}
-  <ul>
-    {% for social in social_accounts %}
-      {%- assign social_handle = social | handleize -%}
-      {% capture social_link %}social_{{ social_handle }}_link{% endcapture %}
-      {% capture social_icon %}icon-{{ social_handle }}{% endcapture %}
 
-      {% if settings[social_link] != blank %}
-        <li>
-          <a href="{{ settings[social_link] }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: social }}">
-            {% include social_icon %}
-            <span class="icon-fallback-text">{{ social }}</span>
-          </a>
-        </li>
-      {% endif %}
-
-    {% endfor %}
-  </ul>
 
   {% if section.settings.show_payment_icons %}
     {% unless shop.enabled_payment_types == empty %}
@@ -46,27 +30,163 @@
       {% endfor %}
     </ul>
   {% endif %}
-
-  <div>
-    <small>{{ 'layout.footer.copyright' | t }} &copy; {{ 'now' | date: "%Y" }}, {{ shop.name | link_to: '/' }}. {{ powered_by_link }}</small>
-  </div>
+  {% for block in section.blocks %}
+    <div class="footer__column" {{ block.shopify_attributes }} data-block="{{block.id}}">
+      <div class="footer__column__title">{{block.settings.title}}</div>
+      {% case block.type %}
+        {% when 'email_signup' %}
+          {% include 'footer_email' %}
+        {% when 'menu' %}
+          {% include 'footer_menu' %}
+        {% when 'blog' %}
+          {% include 'footer_blog' %}
+        {% when 'text' %}
+          {% include 'footer_text' %}
+      {% endcase %}
+      </div>
+  {% endfor %}
+   <div class="footer__social">
+      {% if section.settings.show_social_in_footer %}
+        {% if settings.social_twitter_link != '' %}
+          {% include 'new_twitter_white' %}
+        {% endif %}
+        {% if settings.social_facebook_link != '' %}
+          {% include 'new_facebook_white' %}
+        {% endif %}
+        {% if settings.social_pinterest_link != '' %}
+          {% include 'new_pinterest_white' %}
+        {% endif %}
+        {% if settings.social_instagram_link != '' %}
+          {% include 'new_instagram_white' %}
+        {% endif %}
+        {% if settings.social_tumblr_link != '' %}
+          {% include 'new_tumblr_white' %}
+        {% endif %}
+        {% if settings.social_snapchat_link != '' %}
+          {% include 'new_snapchat_white' %}
+        {% endif %}
+        {% comment %} {% if settings.social_youtube_link != '' %}
+          {% include 'icon-youtube' %}
+        {% endif %}
+        {% if settings.social_vimeo_link != '' %}
+          {% include 'icon-vimeo' %}
+        {% endif %} {% endcomment %}
+      {% endif %}
+    </div>
 </footer>
 
 {% schema %}
   {
     "name": "Footer",
+    "max_blocks": 4,
     "settings": [
-      {
-        "type": "link_list",
-        "id": "footer_linklist",
-        "label": "First menu",
-        "default": "footer"
-      },
       {
         "type": "checkbox",
         "id": "show_payment_icons",
         "label": "Show payment icons",
         "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "show_social_in_footer",
+        "label": "Social Media links in Footer",
+        "default": true
+      }
+    ],
+    "blocks": [
+      {
+        "type": "email_signup",
+        "name": "Email Signup",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title",
+            "default": "Signup For Our Newsletter"
+          }
+        ]
+      },
+      {
+        "type": "menu",
+        "name": "Menu",
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title",
+            "default": "Menu"
+          },
+          {
+            "type": "link_list",
+            "id": "footer_linklist",
+            "label": "First menu",
+            "default": "footer"
+          }
+        ]
+      },
+      {
+        "type": "blog",
+        "name": "Blog",
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title",
+            "default": "Latest Blog Post"
+          },
+          {
+          "type":      "blog",
+          "id":        "footer_blog",
+          "label":     "Blog"
+        }
+        ]
+      },
+      {
+        "type": "text",
+        "name": "Text",
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title",
+            "default": "Text Title"
+          },
+          {
+            "id": "content",
+            "type": "richtext",
+            "label": "Content"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Footer",
+        "category": "Footer",
+        "settings": {
+          
+        },
+        "blocks": [
+          {
+            "type": "menu",
+            "settings": {
+              "title": "Menu"
+            }
+          },
+          {
+            "type": "email_signup",
+            "settings": {
+              "title": "Email Signup"
+            }
+          },
+          {
+            "type": "menu",
+            "settings": {
+              "title": "Menu"
+            }
+          }
+        ]
       }
     ]
   }

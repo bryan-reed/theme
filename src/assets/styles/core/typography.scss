@@ -27,6 +27,11 @@ select {
   text-size-adjust: 100%;
 }
 
+a {
+  color: var(--color-link);
+  text-decoration: none;
+}
+
 a:focus {
   color: inherit;
 }
