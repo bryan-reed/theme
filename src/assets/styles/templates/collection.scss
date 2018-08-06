@@ -68,6 +68,17 @@
             right: 15px;
             cursor: pointer;
         }
+        span.vendor {
+            // color: red;
+        }
+        span.price {
+            margin-top: 5px;
+        }
+        h2 {
+            text-align: left;
+            margin-top: 0;
+            margin-bottom: 0;
+        }
         width: 100%;
         position: fixed;
         top: 50%;
@@ -101,9 +112,8 @@
             }
             button {
                 display: block;
-                padding: 10px;
-                background-color: blue;
-                color: #fff;
+                padding: 10px; // background-color: blue;
+                // color: #fff;
                 margin: 15px auto 0 auto;
                 outline: none;
                 width: 100%;
@@ -137,6 +147,7 @@
             select {
                 margin-top: 10px;
                 margin-bottom: 10px;
+                min-width: 75px;
             }
             .color {
                 width: 25px;
@@ -146,7 +157,7 @@
                 border-radius: 50%;
             }
             input[type="radio"]:checked+.swatch {
-                box-shadow: 0 0 0 2px purple;
+                box-shadow: 0 0 0 2px #000;
                 border: 3px solid white;
             }
         }

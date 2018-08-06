@@ -15,4 +15,7 @@
     color: $button-color;
     padding: 5px;
     width: auto;
+    &--block {
+        width: 100%;
+    }
 }

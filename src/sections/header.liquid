@@ -10,9 +10,8 @@
   Theme Store optional settings
   - Home page only: only shows on the home page
 {%- endcomment -%}
-<section data-section-id="{{ section.id }}" data-section-type="header">
-  <header role="banner" class="main-header mobile-{{section.settings.mobile_layout}} desktop-{{section.settings.desktop_layout}} container">
-    {%- if section.settings.announcement_bar_enabled -%}
+<section data-section-id="{{ section.id }}" data-section-type="header" class="header">
+  {%- if section.settings.announcement_bar_enabled -%}
       <div class="main-header__promo main-header__promo--{{section.settings.announcement_bar_position}}">
         {%- if section.settings.announcement_bar_home_page_only == false or template.name == 'index' -%}
           {%- if section.settings.announcement_bar_link != blank -%}
@@ -24,9 +23,8 @@
           {%- endif -%}
         {%- endif -%}
       </div>
-    {%- else -%}
-        <div class="main-header__promo main-header__promo--left"></div>
     {%- endif -%}
+  <header role="banner" class="main-header mobile-{{section.settings.mobile_layout}} desktop-{{section.settings.desktop_layout}} container">
     <div class="main-header__social">
       {% if section.settings.show_social_in_header %}
         {% if settings.social_twitter_link != '' %}
@@ -91,15 +89,15 @@
           value="{{ search.terms | escape }}"
           placeholder="{{ 'general.search.placeholder' | t }}"> {% endcomment %}
 
-        <button type="submit" class="button">
+        <button type="submit" class="button search_btn">
           {% include 'icon-search' %}
           {% comment %} <span class="icon-fallback-text">{{ 'general.search.submit' | t }}</span> {% endcomment %}
         </button>
       </form>
-      <a href="/cart">
+      <a href="/cart" class="header_cart">
         {% include 'new_shopping_cart' %}
         {% comment %} {{ 'layout.cart.title' | t }} {% endcomment %}
-        {% comment %} ({{ cart.item_count }} {{ 'layout.cart.items_count' | t: count: cart.item_count }}) {% endcomment %}
+        <strong>{{ cart.item_count }}</strong>
       </a>
       {% comment %} {% if shop.customer_accounts_enabled %}
         {% include 'new_account' %}

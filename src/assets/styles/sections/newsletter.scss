@@ -1,0 +1,19 @@
+.newsletter {
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  h2,
+  h4 {
+    text-align: center;
+    margin-top: 0;
+  }
+  h2 {
+    text-transform: uppercase;
+  }
+  form {
+    // margin-top: 15px;
+    display: flex;
+    max-width: 450px;
+  }
+}

@@ -1,0 +1,35 @@
+<div class="image-grid{% unless block.settings.enable_full_width == 'y' %} container{% endunless %}" {{ block.shopify_attributes }} data-block="{{block.id}}">
+    {% if block.settings.title != blank %}
+        <h2 class="section_title">{{ block.settings.title | escape }}</h2>
+    {% endif %}
+    {% assign validImages = false %}
+    {% for i in (1..9) %}
+        {% assign gridImage = 'image-' | append: i %}
+        {% assign desktopSize = 'desktop_size-' | append: i %}
+        {% assign mobileSize = 'mobile_size-' | append: i %}
+        {% assign align = 'align-' | append: i %}
+        {% assign imageTitle = 'title-' | append: i %}
+        {% assign horizontalPosition = 'title_h_position-' | append: i %}
+        {% assign verticalPosition = 'title_v_position-' | append: i %}
+        {% assign hoverText = 'hover_text-' | append: i %}
+        {% if block.settings[gridImage] != blank %}
+            {% assign validImages = true %}
+            <div class="image-grid__item grid-item--{{block.settings[desktopSize]}} grid-item--{{block.settings[mobileSize]}}m v-{{block.settings[verticalPosition]}} f-{{block.settings[align]}}" {{ block.shopify_attributes }} >
+                <img data-src="{{ block.settings[gridImage] | img_url: '800x' }}" class="lazyload" />
+                <div class="grid-item h-{{block.settings[horizontalPosition]}}">
+                    <h2>{{block.settings[imageTitle]}}</h2>
+                </div>
+                {% if block.settings[hoverText] != blank %}
+                <div class="grid-hover">
+                    <div class="grid-hover__content">
+                       {{block.settings[hoverText]}}
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        {% endif %}
+    {% endfor %}
+    {% if validImages == false %}
+        {% comment %} Use default layout {% endcomment %}
+    {% endif %}
+</div>

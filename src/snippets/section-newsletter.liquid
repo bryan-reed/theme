@@ -1,0 +1,27 @@
+<div class="newsletter container" {{ block.shopify_attributes }} data-block="{{block.id}}">
+  {% if block.settings.section_title != blank %}
+    <h2 class="section_title">{{ block.settings.section_title | escape }}</h2>
+  {% endif %}
+  {% if block.settings.subheading != blank %}
+    <h4>{{ block.settings.subheading | escape }}</h4>
+  {% endif %}
+
+  {% form 'customer' %}
+    {{ form.errors | default_errors }}
+    {% if form.posted_successfully? %}
+      <p>{{ 'general.newsletter_form.confirmation' | t }}</p>
+    {% else %}
+      <input type="hidden" name="contact[tags]" value="newsletter">
+      <input type="email"
+        name="contact[email]"
+        id="Email"
+        value="{% if customer.email != blank %}{{ customer.email }}{% endif %}"
+        placeholder="{{ 'general.newsletter_form.email_placeholder' | t }}"
+        autocorrect="off"
+        autocapitalize="off">
+      <button type="submit" name="commit" id="Subscribe" class="btn">
+        <span>{{ 'general.newsletter_form.submit' | t }}</span>
+      </button>
+    {% endif %}
+  {% endform %}
+</div>

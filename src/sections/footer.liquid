@@ -45,6 +45,12 @@
       {% endcase %}
       </div>
   {% endfor %}
+  <div class="footer__logos">
+   <div class="f_logo"><img src="{{ '../assets/images/afae-logo.png' }}" alt="Aliance for Artisan Enterprise" /></div>
+   <div class="f_logo"><img src="{{ '../assets/images/footer-logo2.png' }}" alt="Fair Trade Federation" /></div>
+   <div class="f_logo"><img src="{{ '../assets/images/b-corp-logo.png' }}" alt="Certified B Corporation" /></div>
+
+  </div>
    <div class="footer__social">
       {% if section.settings.show_social_in_footer %}
         {% if settings.social_twitter_link != '' %}

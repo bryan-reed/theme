@@ -67,6 +67,129 @@
     ]
   },
   {
+    "name": "Promo Bar",
+    "settings": [
+      {
+        "type": "color",
+        "id": "promo_background_color",
+        "label": "Background Color",
+        "default": "#000"
+      },
+      {
+        "type": "color",
+        "id": "promo_text_color",
+        "label": "Text Color",
+        "default": "#FFF"
+      }
+    ]
+  },
+  {
+    "name": "Main Navigation",
+    "settings": [
+      {
+        "type": "color",
+        "id": "nav_color",
+        "label": "Link Color",
+        "default": "#000"
+      },
+      {
+        "type": "color",
+        "id": "nav_hover_color",
+        "label": "Link Hover Color",
+        "default": "#CCC"
+      },
+      {
+        "type": "color",
+        "id": "nav_bg_color",
+        "label": "Background Color",
+        "default": "#FFF"
+      },
+      {
+        "type": "color",
+        "id": "nav_dd_color",
+        "label": "Dropdown Link Color",
+        "default": "#000"
+      },
+      {
+        "type": "color",
+        "id": "nav_dd_hover_color",
+        "label": "Dropdown Hover Color",
+        "default": "#CCC"
+      },
+      {
+        "type": "color",
+        "id": "nav_dd_bg_color",
+        "label": "Dropdown Background Color",
+        "default": "#000"
+      },
+      {
+        "type": "color",
+        "id": "nav_mm_color",
+        "label": "Mega Menu Color",
+        "default": "#CCC"
+      },
+      {
+        "type": "color",
+        "id": "nav_mm_hover_color",
+        "label": "Mega Menu Hover Color",
+        "default": "#CCC"
+      },
+      {
+        "type": "color",
+        "id": "nav_mm_bg_color",
+        "label": "Mega Menu Background Color",
+        "default": "#CCC"
+      }
+    ]
+  },
+  {
+    "name": "Footer",
+    "settings": [
+      {
+        "type": "color",
+        "id": "footer_background_color",
+        "label": "Background Color",
+        "default": "#000"
+      },
+      {
+        "type": "color",
+        "id": "footer_text_color",
+        "label": "Text Color",
+        "default": "#fff"
+      },
+      {
+        "type": "color",
+        "id": "footer_link_color",
+        "label": "Link Color",
+        "default": "#fff"
+      },
+      {
+        "type": "color",
+        "id": "footer_newsletter_input_bg",
+        "label": "Newsletter Input Background",
+        "default": "#616165"
+      },
+      {
+        "type": "color",
+        "id": "footer_newsletter_input_text",
+        "label": "Newletter Input Color",
+        "default": "#fff"
+      },
+      {
+        "type": "color",
+        "id": "footer_newsletter_button_bg",
+        "label": "Newsletter Button Background",
+        "default": "#363636"
+      },
+      {
+        "type": "color",
+        "id": "footer_newsletter_button_text",
+        "label": "Newsletter Button Text",
+        "default": "#fff"
+      }
+    ]
+  },
+  {
     "name": "Social media",
     "settings": [
       {

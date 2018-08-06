@@ -1,5 +1,5 @@
 <section data-section-id="{{ section.id }}" data-section-type="image-grid" class="image-grid{% unless section.settings.enable_full_width == 'y' %} container{% endunless %}">
-{% if section.settings.title != blank %}
+  {% if section.settings.title != blank %}
     <h2 class="section_title">{{ section.settings.title | escape }}</h2>
   {% endif %}
     {% for block in section.blocks %}

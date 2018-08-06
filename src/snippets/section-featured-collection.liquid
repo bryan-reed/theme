@@ -1,0 +1,72 @@
+<div class="featured-collection" {{ block.shopify_attributes }} data-block="{{block.id}}">
+  {% if block.settings.title != blank %}
+    <h2 class="section_title featured-collection__title">{{ block.settings.title | escape }}</h2>
+  {% endif %}
+
+  {%- assign collection = collections[block.settings.collection] -%}
+  {% assign productLimit = block.settings.number_of_products %}
+  {% if block.settings.layout == 'grid' %}
+    {% assign carouselClass = 'no-slicker' %}
+  {% else %}
+    {% assign carouselClass = 'slicker' %}
+  {% endif %}
+  <div class="{{carouselClass}}" data-slick='{"slidesToShow": {{block.settings.products_per_row}}}'>
+    {% for product in collection.products limit: productLimit %}
+      <div class="products-{{block.settings.products_per_row}}">
+          <div class="featured-collection__product">
+            <div class="product-image">
+              <div class="first">
+                <img src="{{product.featured_image | img_url: '400x'}}" alt="{{product.featured_image.alt}}" />
+              </div>
+              {% if product.images[1] %}
+                <div class="second">
+                  <img src="{{product.images[1] | img_url: '400x'}}" alt="Test" />
+                </div>
+              {% endif %}
+            </div>
+              <div class="product-content {{block.settings.content_align}}">
+                {% if block.settings.show_title %}
+                  <h3>{{product.title}}</h3>
+                {% endif %}
+                {% if block.settings.show_vendor %}
+                  <h3>{{product.vendor}}'</h3>
+                {% endif %}
+                {% if block.settings.show_price %}
+                  <span class="price">{{product.price | money}}</span>
+                {% endif %}  
+                {% if block.settings.show_swatches %}
+                  {% include 'swatches' %}
+                {% endif %}   
+              </div>
+          </div>
+      </div>
+      
+    {% else %}
+      
+      {% for i in (1..6) %}
+        <div class="products-{{block.settings.products_per_row}}">
+        <div class="featured-collection__product">
+            <div class="product-image">
+            <div class="first">
+            {% capture current %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
+            {{ 'product-' | append: current | placeholder_svg_tag: 'placeholder-svg placeholder-svg--small' }}  
+            </div>
+            </div>
+            <div class="product-content {{block.settings.content_align}}">
+              {% if block.settings.show_title %}
+                <h3>{{ 'homepage.onboarding.product_title' | t }}</h3>
+              {% endif %}
+              {% if block.settings.show_vendor %}
+                <h3>Vendor</h3>
+              {% endif %}
+              {% if block.settings.show_price %}
+                <span class="price">{{ 1999 | money }}</span>
+              {% endif %}   
+            </div>
+        </div>
+        </div>
+      {% endfor %}
+    {% endfor %}
+    </ul>
+  </div>
+</div>

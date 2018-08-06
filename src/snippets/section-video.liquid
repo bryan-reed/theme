@@ -1,0 +1,14 @@
+<div class="video{% unless block.settings.enable_full_width == 'y' %} container{% endunless %}" {{ block.shopify_attributes }} data-block="{{block.id}}">
+    {% if block.settings.title != blank %}
+    <h2 class="section_title">{{ block.settings.title | escape }}</h2>
+  {% endif %}
+    {% if block.settings.video_url != blank %}
+        {% if block.settings.video_url.type == 'youtube' %}
+            <iframe src="https://www.youtube.com/embed/{{block.settings.video_url.id}}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        {% elsif block.settings.video_url.type == 'vimeo' %}
+            <iframe src="https://player.vimeo.com/video/{{block.settings.video_url.id}}" frameborder="0" allowfullscreen></iframe>
+        {% endif %}
+    {% else %}
+           {{block.settings.embed_video}} 
+    {% endif %}
+</div>

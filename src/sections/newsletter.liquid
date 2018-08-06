@@ -6,12 +6,12 @@
   - Heading: title of the newsletter section
   - Subheading: description of the newsletter section
 {%- endcomment -%}
-<section>
+<section data-section-type="newsletter" class="newsletter container">
   {% if section.settings.section_title != blank %}
-    <label for="Email">{{ section.settings.section_title | escape }}</label>
+    <h2 class="section_title">{{ section.settings.section_title | escape }}</h2>
   {% endif %}
   {% if section.settings.subheading != blank %}
-    <p>{{ section.settings.subheading | escape }}</p>
+    <h4>{{ section.settings.subheading | escape }}</h4>
   {% endif %}
 
   {% form 'customer' %}
@@ -27,7 +27,7 @@
         placeholder="{{ 'general.newsletter_form.email_placeholder' | t }}"
         autocorrect="off"
         autocapitalize="off">
-      <button type="submit" name="commit" id="Subscribe">
+      <button type="submit" name="commit" id="Subscribe" class="btn">
         <span>{{ 'general.newsletter_form.submit' | t }}</span>
       </button>
     {% endif %}
@@ -42,7 +42,7 @@
         "type": "text",
         "id": "section_title",
         "label": "Heading",
-        "default": "Subscribe to our newsletter"
+        "default": "Stay in the Know"
       },
       {
         "type": "text",

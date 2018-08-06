@@ -299,12 +299,12 @@ sections.register("collection-template", {
         ${images}
       </div>
       <div class="main_content">
-      <h4>${this.currentProduct.vendor}</h4>
+      <span class="vendor">${this.currentProduct.vendor}</span>
       <h2>${this.currentProduct.title}</h2>
-      <small data-price>${formatMoney(
+      <span class="price" data-price>${formatMoney(
         this.currentProduct.price,
         theme.moneyFormat
-      )}</small>
+      )}</span>
       ${filters}
       <select name="id" class="no-js" data-product-select>${variants}</select>
       <div class="btn_container">
@@ -340,7 +340,10 @@ sections.register("collection-template", {
   },
   //Expand accordion
   openSideNav(e) {
-    $(e.target).toggleClass("open");
+    console.log("SIDE NAV CLICKED", e);
+    $(e.target)
+      .closest("li.top-lvl")
+      .toggleClass("open");
   },
   //Loading information about collection
   loadCollection() {
@@ -435,7 +438,7 @@ sections.register("collection-template", {
 // }
 function getFilterOptions(data, option, style, currentVariant) {
   let html = `<div class="clearfix">
-        <p>Select ${data.name}</p>`;
+        <p>${data.name}</p>`;
   switch (option) {
     case "swatch":
       if (data.name.toLowerCase() === "color") {
@@ -490,7 +493,7 @@ function getFilterOptions(data, option, style, currentVariant) {
       }"
       data-single-option-selector
       data-index="option${data.position}">`;
-      html += `<option value="">Select a ${data.name}</option>`;
+      // html += `<option value="">Select a ${data.name}</option>`;
       html += data.values
         .map(
           (opt, index) =>

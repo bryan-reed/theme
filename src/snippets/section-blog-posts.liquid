@@ -1,0 +1,83 @@
+<div class="blog-section container" {{ block.shopify_attributes }} data-block="{{block.id}}">
+  {% if block.settings.title != blank %}
+    <h2>{{ block.settings.title | escape }}</h2>
+  {% endif %}
+
+  {%- assign blog = blogs[block.settings.blog] -%}
+
+  {%- comment -%}
+    Due to accessibility requirements, the Blog entries list functions
+    as a list of content items. Non-visual users will expect lists of content
+    to appear in a list structure, allowing for easier understanding and navigation of list items.
+  {%- endcomment -%}
+    {% for article in blog.articles limit: block.settings.post_limit %}
+      <div class="post posts-{{block.settings.posts_per_row}}">
+        {%- comment -%}
+          Due to accessibility requirements, we are regrouping all logical elements into the <a> element.
+          If a screen reader user is tabbing through the page, or browsing by links on the page with duplicated links,
+          they will appear identical which may lead to a confusing user experience.
+        {%- endcomment -%}
+        <a href="{{ article.url }}">
+          {% if article.image %}
+             <img src="{{article.image | img_url: '400x'}}" alt="Test" />
+          {% endif %}
+        </a>
+        <div class="blog-content">
+          <a href="{{ article.url }}"><h3>{{ article.title }}</h3></a>
+          {% if block.settings.blog_show_author %}
+            <span>{{ 'blogs.article.by_author' | t: author: article.author }}</span>
+          {% endif %}
+
+          {% if block.settings.blog_show_date %}
+            <span class="date">
+              {{ article.published_at | time_tag: format: 'month_day_year' }}
+            </span>
+          {% endif %}
+          
+          <div class="body">
+            {% if article.excerpt.size > 0 %}
+              {{ article.excerpt }}
+            {% else %}
+              {{ article.content | strip_html | truncate: 150 }}
+            {% endif %}
+          </div>
+          {% if article.tags.size > 0 %}
+            {%- comment -%}
+              The Tag link list functions as a list of content items.
+              Non-visual users will expect lists of content to appear
+              in a list structure, allowing for easier understanding and navigation of list items.
+            {%- endcomment -%}
+            <ul aria-label="{{ 'blogs.article.tags' | t }}">
+              {% for tag in article.tags %}
+                <li><a href="{{ blog.url }}/tagged/{{ tag | handle }}">{{ tag }}</a></li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+          <a href="{{ article.url }}" aria-label="{{ 'blogs.article.read_more_title' | t: title: article.title }}">{{ 'blogs.article.read_more' | t }}</a>
+        </div>
+      </div>
+    {% else %}
+      {% for i in (1..block.settings.post_limit) %}
+        <div class="post posts-{{block.settings.posts_per_row}}">
+          {% capture current %}{% cycle 1, 2 %}{% endcapture %}
+          {{ 'image' | placeholder_svg_tag: 'placeholder-svg placeholder-svg--' }}
+          <div class="blog-content">
+            <h3>
+              <a href="#">{{ 'homepage.onboarding.blog_title' | t }}</a>
+            </h3>
+            {% if block.settings.blog_show_date %}
+              <span class="date">{{"now" | time_tag: format: 'month_day_year'}}</span>
+            {% endif %}
+            {% if block.settings.blog_show_author %}
+              <span>{{ 'homepage.onboarding.blog_author' | t }}</span>
+            {% endif %}
+
+            <div class="body">Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit aspernatur nobis rerum. Aliquam delectus tenetur voluptatum, a sint asperiores porro, quibusdam doloremque laudantium vero animi debitis, ut minus aliquid nulla!</div>
+
+            <a href="#" class="read-more">{{ 'blogs.article.read_more' | t }}</a>
+          </div>
+        </div>
+      {% endfor %}
+    {% endfor %}
+  </ul>
+</div>

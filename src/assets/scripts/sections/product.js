@@ -39,8 +39,11 @@ const cssClasses = {
 
 sections.register("product", {
   onLoad() {
+    console.log("Section should workd");
+    // console.log("Hello from product js");
     let opts = {};
     let slickSelector = "";
+    let numSlides = $(".detail_image").length;
     if ($(".alt_images").length) {
       slickSelector = ".alt_images";
       opts = {
@@ -60,7 +63,10 @@ sections.register("product", {
         nextArrow: '<button class="slick-next"><span>&#10095;</span></button>'
       };
     }
-    $(slickSelector).slick(opts);
+    //Only initialize slider if more than 3 images
+    if (numSlides > 3) {
+      $(slickSelector).slick(opts);
+    }
     // Stop parsing if we don't have the product json script tag when loading
     // section in the Theme Editor
     if (!$(selectors.productJson, this.$container).html()) {

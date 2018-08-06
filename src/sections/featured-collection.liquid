@@ -57,7 +57,7 @@
           <div class="featured-collection__product">
             <div class="product-image">
               <div class="first">
-                <img src="{{product.featured_image | img_url: '400x'}}" alt="Test" />
+                <img src="{{product.featured_image | img_url: '400x'}}" alt="{{product.featured_image.alt}}" />
               </div>
               {% if product.images[1] %}
                 <div class="second">
@@ -70,7 +70,7 @@
                   <h3>{{product.title}}</h3>
                 {% endif %}
                 {% if section.settings.show_vendor %}
-                  <h3>{{product.vendor}}'</h3>
+                  <h3>{{product.vendor}}</h3>
                 {% endif %}
                 {% if section.settings.show_price %}
                   <span class="price">{{product.price | money}}</span>

@@ -1,0 +1,55 @@
+<div class="slideshow" {{ block.shopify_attributes }} data-block="{{block.id}}">
+{% if block.settings.title != blank %}
+    <h2 class="section_title">{{ block.settings.title | escape }}</h2>
+  {% endif %}
+    <div class="slider flexslider" data-duration="{{block.settings.slide_duration}}000">
+            <ul class="slides">
+            {% assign validSlides = false %}
+                {% for i in (1..6) %}
+                    {% assign desktopImage = 'image-' | append: i %}
+                    {% assign mobileImage = 'm_image-' | append: i %}
+                    {% assign heading = 'title-' | append: i %}
+                    {% assign subHeading = 'sub_head-' | append: i %}
+                    {% assign linkText = 'link_text-' | append: i %}
+                    {% assign linkUrl = 'link-' | append: i %}
+                    {% assign animate = 'animate-' | append: i %}
+                    {% if block.settings[desktopImage] != blank %}
+                        <li class="iterable-slides flex-slide-{{i}}"   data-slide-index="{{i}}">
+                            {% assign validSlides = true %}
+                            <picture>
+                            <!--[if IE 9]><video style="display: none;><![endif]-->
+                            <source
+                                data-srcset="{{ block.settings[mobileImage] | img_url: '400x' }}"
+                                media="--small" />
+                            <source
+                                data-srcset="{{ block.settings[mobileImage] | img_url: '800x' }} 400w"
+                                media="--medium" />
+                            <source
+                                data-srcset="{{ block.settings[desktopImage] | img_url: '1000x' }}"
+                                media="--large" />
+                            <source
+                                    data-srcset="{{ block.settings[desktopImage] | img_url: '1600x' }}" />
+                                <!--[if IE 9]></video><![endif]-->
+                                <img
+                                    src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+                                    data-src="{{ block.settings[desktopImage] | img_url: '1600x' }}"
+                                    class="lazyload"
+                                    alt="image with artdirection" />
+                            </picture>
+                            <div class="caption caption--{{block.settings[animate]}}">
+                                <h2 class="caption__heading">{{block.settings[heading]}}</h1>
+                                <div class="caption__text">{{block.settings[subHeading]}}</div>
+                                <a href="{{block.settings[linkUrl]}}" class="caption__btn btn">{{block.settings[linkText]}}</a>
+                            </div> 
+                        </li>
+                    {% endif %}
+            {% endfor %} 
+            {% if validSlides == false %}
+                {% for i in (1..6) %}
+                        {% capture current %}{% cycle 1, 2 %}{% endcapture %}
+                    <li class="iterable-slides flex-slide-{{i}}" data-slide-index="{{i}}">{{ 'lifestyle-' | append: current | placeholder_svg_tag: 'placeholder-svg placeholder-svg--' }}</li>
+                {% endfor %}
+            {% endif %}
+            </ul>
+        </div>  
+</div>

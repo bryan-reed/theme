@@ -87,7 +87,27 @@
       {% unless product.handle == current_product.handle %}
          {% unless same_vendor and current_product.vendor != product.vendor %}
            {% unless same_type and current_product.type != product.type %}
-                 <a href="{{ product.url | within: collection }}" class="product-{{number_of_related_products_per_row}}"><img src="{{product.featured_image | img_url: '480x' }}" /></a>
+                 {% comment %} <a href="{{ product.url | within: collection }}" class="product-{{number_of_related_products_per_row}}"><img src="{{product.featured_image | img_url: '480x' }}" /></a> {% endcomment %}
+                <div class="product-{{number_of_related_products_per_row}}">
+                    <div class="featured-collection__product">
+                      <div class="product-image">
+                        <div class="first">
+                          <img src="{{product.featured_image | img_url: '400x'}}" alt="{{product.featured_image.alt}}" />
+                        </div>
+                        {% if product.images[1] %}
+                          <div class="second">
+                            <img src="{{product.images[1] | img_url: '400x'}}" alt="Test" />
+                          </div>
+                        {% endif %}
+                      </div>
+                        <div class="product-content center">
+                            <h3>{{product.title}}</h3>
+                            <h3>{{product.vendor}}</h3>
+                            <span class="price">{{product.price | money}}</span>                          
+                            {% include 'swatches' %}
+                        </div>
+                    </div>
+                </div>
              {% assign counter = counter | plus: 1 %}
              {% if counter == break_at %}
                {% break %}

@@ -1,0 +1,36 @@
+.featured-product {
+    display: flex;
+    flex-wrap: wrap;
+    p {
+        margin-bottom: 0;
+    }
+    select {
+        margin-top: 10px;
+        margin-bottom: 10px;
+        min-width: 75px;
+    }
+    &__title {
+        flex-basis: 100%;
+    }
+    &__image {
+        flex-basis: 100%;
+        text-align: center;
+    }
+    &__content {
+        flex-basis: 100%;
+        text-align: center;
+        padding: 15px;
+        .rte {
+            margin: 15px 0;
+        }
+    }
+    @include media-query($medium-up) {
+        &__image {
+            flex-basis: 50%;
+        }
+        &__content {
+            flex-basis: 50%;
+            text-align: left;
+        }
+    }
+}

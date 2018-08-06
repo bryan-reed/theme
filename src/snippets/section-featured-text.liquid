@@ -1,0 +1,22 @@
+<div class="featured-text container" {{ block.shopify_attributes }} data-block="{{block.id}}">
+   <h{{block.settings.title_size | plus: '1'}}>{{block.settings.title}}</h{{block.settings.title_size | plus: '1'}}>
+   {% assign validColumns = false %}
+   {% for i in (1..4) %}
+    {% assign border = 'border-' | append: i %}
+    {% assign content = 'content-' | append: i %}
+    {% assign borderSize = 'border_size-' | append: i %}
+    {% if block.settings[content] != blank %}
+        {% assign validColumns = true %}
+            <div class="content border-{{block.settings[border]}} border--{{block.settings[borderSize]}}">
+                <div class="rte">{{block.settings[content]}}</div>
+            </div>
+        {% endif %}
+   {% endfor %}
+   {% if validColumns == false %}
+        <div class="content border-normal border--1">
+            <div class="rte">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ut, cum? Earum, quos magni iure eveniet eius eos quis commodi eligendi? Recusandae et vero nesciunt quae, ipsum neque molestias explicabo labore?
+            Illum voluptates voluptatum voluptatibus deserunt et in illo natus, esse reiciendis, commodi eos! Error accusamus ad atque alias dolorum id optio minus, a consequuntur. Quasi cumque ipsa corrupti molestias atque.
+            Suscipit nemo distinctio iure harum sit, perferendis nostrum pariatur alias illo esse sequi officiis, modi, odit laborum doloremque consectetur. At, dolorem! Laborum dicta, eius fugiat impedit adipisci officia numquam voluptatum?</div>
+        </div>
+   {% endif %}
+</div>

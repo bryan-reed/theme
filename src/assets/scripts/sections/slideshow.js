@@ -4,6 +4,7 @@ import sections from "@shopify/theme-sections";
 
 sections.register("slideshow", {
   onLoad(e) {
+    console.log("SLIDESHOW LOADED");
     // console.log("SECTION LOADED", e, this);
     // Get the element
     this.element = this.$container.find(".slider");

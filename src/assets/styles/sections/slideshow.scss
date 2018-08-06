@@ -1,68 +1,72 @@
 .slideshow {
-  * {
-    list-style: none;
-  }
-  img {
-    width: 100%;
-  }
+    * {
+        list-style: none;
+    }
+    img {
+        width: 100%;
+    }
 }
 
 .slider {
-  border: none;
-  margin: 0;
-  li {
-    position: relative; // max-height: 600px;
-  }
-  .flex-direction-nav {
-    position: absolute;
-    top: 50%;
-    width: 100%;
-    transform: translateY(-50%);
-  }
-  .flex-direction-nav .flex-prev {
-    left: 0;
-  }
-  .flex-direction-nav .flex-next {
-    right: 0;
-  }
-  .caption {
-    position: relative;
-    text-align: center;
-  }
-  .caption * {
+    border: none;
     margin: 0;
-    margin-bottom: 15px;
-  }
-  .caption__btn {
-    padding: 10px;
-    display: inline-block;
-    width: auto;
-  }
-  @include media-query($medium-up) {
-    .caption--left,
-    .caption--none {
-      position: absolute;
-      bottom: 30%;
-      left: 60px;
-      transform: translateX(-300px);
-      opacity: 0;
+    li {
+        position: relative; // max-height: 600px;
     }
-    .caption--right {
-      position: absolute;
-      bottom: 30%;
-      right: 60px;
-      transform: translateX(300px);
-      opacity: 0;
-      &__btn {
-        padding: 5px;
-      }
+    .flex-direction-nav {
+        position: absolute;
+        top: 50%;
+        width: 100%;
+        transform: translateY(-50%);
     }
-    .flex-active-slide .caption--none,
-    .flex-active-slide .caption--left,
-    .flex-active-slide .caption--right {
-      transition: 0.2s all ease-out 0.7s;
-      transform: translateX(0);
-      opacity: 1;
+    .flex-direction-nav .flex-prev {
+        left: 0;
     }
-  }
+    .flex-direction-nav .flex-next {
+        right: 0;
+    }
+    .caption {
+        position: relative;
+        text-align: center;
+        margin-top: 15px;
+    }
+    .caption * {
+        margin: 0;
+        margin-bottom: 15px;
+    }
+    .caption__btn {
+        padding: 10px;
+        display: inline-block;
+        width: auto;
+    }
+    @include media-query($medium-up) {
+        .caption {
+            margin-top: 0;
+        }
+        .caption--left,
+        .caption--none {
+            position: absolute;
+            bottom: 30%;
+            left: 60px;
+            transform: translateX(-300px);
+            opacity: 0;
+        }
+        .caption--right {
+            position: absolute;
+            bottom: 30%;
+            right: 60px;
+            transform: translateX(300px);
+            opacity: 0;
+            &__btn {
+                padding: 5px;
+            }
+        }
+        .flex-active-slide .caption--none,
+        .flex-active-slide .caption--left,
+        .flex-active-slide .caption--right {
+            transition: 0.2s all ease-out 0.7s;
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
 }
