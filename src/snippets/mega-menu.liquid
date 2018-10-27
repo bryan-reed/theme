@@ -1,16 +1,13 @@
-<div class="mega-menu__container" {{ block.shopify_attributes }}>
+<ul class="mega-menu__container" {{ block.shopify_attributes }}>
     {% if block.settings.image != blank %}
-        <div class="mega-menu__container__col image-{{block.settings.image_position}}">
+        <li class="image image-{{block.settings.image_position}}">
             <img data-src="{{ block.settings.image | img_url: '250x' }}" alt="" class="lazyload" />
-        </div>
+        </li>
     {% endif %}
     {% if link.levels %}
-     {% for childlink in link.links %}
-        <div class="mega-menu__container__col">
-            <div class="mega-menu__container__col__text">
-                <a class="column_header" href="{{ childlink.url }}">
-                    {{ childlink.title }}
-                </a>
+        {% for childlink in link.links %}
+            <li {%if childlink.links %} class="mega-menu-2" {% endif %}>
+            <a href="{{ childlink.url }}" class="mega-menu__heading">{{ childlink.title }}</a>
                 {% if childlink.links %}
                     <ul>
                     {% for grandchildLink in childlink.links %}
@@ -22,9 +19,27 @@
                     {% endfor %}
                     </ul>
                 {% endif %}
-            </div>
-        </div>
-    {% endfor %}
+            </li>
+            {% comment %} <div class="mega-menu__container__col">
+                <div class="mega-menu__container__col__text">
+                    <a class="column_header" href="{{ childlink.url }}">
+                        {{ childlink.title }}
+                    </a>
+                    {% if childlink.links %}
+                        <ul>
+                        {% for grandchildLink in childlink.links %}
+                            <li>
+                            <a href="{{ grandchildLink.url }}">
+                                {{ grandchildLink.title }}
+                            </a>
+                            </li>
+                        {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+            </div> {% endcomment %}
+        {% endfor %}
+
         {% comment %} More than one column {% endcomment %}
         {% comment %} <div class="mega-menu__container__col">
             <div class="mega-menu__container__col__text">
@@ -52,5 +67,4 @@
         
         
     {% endif %}
-   
-</div>
+</ul>

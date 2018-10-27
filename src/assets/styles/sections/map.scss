@@ -1,0 +1,77 @@
+.map-section {
+    position: relative;
+    height: 650px;
+    width: 100%;
+    overflow: hidden;
+    @include media-query($medium-up) {
+        height: 500px;
+    }
+    .page-width {
+        height: 100%;
+    }
+}
+
+.map-section--load-error {
+    height: auto;
+}
+
+.map-section__overlay-wrapper {
+    position: relative;
+    text-align: center;
+    height: 100%;
+}
+
+.map-section__overlay {
+    position: relative;
+    display: inline-block;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: #fff;
+    padding: 15px;
+    margin-top: 15px;
+    width: 100%;
+    text-align: center;
+    z-index: 3;
+    @include media-query($medium-up) {
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        margin-top: 0;
+        width: percentage(1 / 3);
+        .ie9 & {
+            top: 10%;
+        }
+    }
+    .map-section--load-error & {
+        position: static;
+        transform: translateY(0);
+    }
+}
+
+.map-section__link {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+} // Optically center map in visible area with
+// extended height/widths and negative margins
+.map-section__container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 150%;
+    margin-bottom: -50%;
+    @include media-query($medium-up) {
+        width: 130%;
+        height: 100%;
+        margin: 0 -30% 0 0;
+    }
+} // Hide Google maps UI
+.gm-style-cc,
+.gm-style-cc+div {
+    visibility: hidden;
+}

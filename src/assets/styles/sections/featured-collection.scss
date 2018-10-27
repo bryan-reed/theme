@@ -77,7 +77,8 @@
       margin-left: 0;
       margin-right: 0;
     }
-    .no-slicker div {
+    .no-slicker div,
+    .no-slicker a {
       &.products-1 {
         flex-basis: 100%;
       }

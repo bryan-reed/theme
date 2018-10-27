@@ -28,28 +28,28 @@
     <div class="main-header__social">
       {% if section.settings.show_social_in_header %}
         {% if settings.social_twitter_link != '' %}
-          {% include 'new_twitter' %}
+          <a href="{{settings.social_twitter_link}}">{% include 'new_twitter' %}</a>
         {% endif %}
         {% if settings.social_facebook_link != '' %}
-          {% include 'new_facebook' %}
+          <a href="{{settings.social_facebook_link}}">{% include 'new_facebook' %}</a>
         {% endif %}
         {% if settings.social_pinterest_link != '' %}
-          {% include 'new_pinterest' %}
+          <a href="{{settings.social_pinterest_link}}">{% include 'new_pinterest' %}</a>
         {% endif %}
         {% if settings.social_instagram_link != '' %}
-          {% include 'new_instagram' %}
+          <a href="{{settings.social_instagram_link}}">{% include 'new_instagram' %}</a>
         {% endif %}
         {% if settings.social_tumblr_link != '' %}
-          {% include 'new_tumblr' %}
+          <a href="{{settings.social_tumblr_link}}">{% include 'new_tumblr' %}</a>
         {% endif %}
         {% if settings.social_snapchat_link != '' %}
-          {% include 'new_snapchat' %}
+          <a href="{{settings.social_snapchat_link}}">{% include 'new_snapchat' %}</a>
         {% endif %}
         {% if settings.social_youtube_link != '' %}
-          {% include 'icon-youtube' %}
+          <a href="{{settings.social_youtube_link}}">{% include 'icon-youtube' %}</a>
         {% endif %}
         {% if settings.social_vimeo_link != '' %}
-          {% include 'icon-vimeo' %}
+          <a href="{{settings.social_vimeo_link}}">{% include 'icon-vimeo' %}</a>
         {% endif %}
       {% endif %}
     </div>
@@ -106,8 +106,6 @@
     </div>
   </header>
 </section>
-<p></p>
-
 {% if section.settings.logo != blank %}
   <style>
     .logo-image {

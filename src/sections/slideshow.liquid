@@ -1,50 +1,92 @@
-<section data-section-id="{{ section.id }}" data-section-type="slideshow" class="slideshow">
-{% if section.settings.title != blank %}
-    <h2 class="section_title">{{ section.settings.title | escape }}</h2>
-  {% endif %}
-    <div class="slider flexslider" data-duration="{{section.settings.slide_duration}}000">
-            <ul class="slides">
-            {% for block in section.blocks %}
-                <li class="iterable-slides flex-slide-{{block.id}}" {{ block.shopify_attributes }} data-block="{{block.id}}" data-slide-index="{{ forloop.index | minus: 1}}">
-                    {% if block.settings.image != blank %}
-                    <picture>
-                      <!--[if IE 9]><video style="display: none;><![endif]-->
-                      <source
-                        data-srcset="{{ block.settings.m_image | img_url: '400x' }}"
-                        media="--small" />
-                      <source
-                        data-srcset="{{ block.settings.m_image | img_url: '800x' }} 400w"
-                        media="--medium" />
-                      <source
-                        data-srcset="{{ block.settings.image | img_url: '1000x' }}"
-                        media="--large" />
-                      <source
-                            data-srcset="{{ block.settings.image | img_url: '1600x' }}" />
-                        <!--[if IE 9]></video><![endif]-->
-                        <img
-                            src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-                            data-src="{{ block.settings.image | img_url: '1600x' }}"
-                            class="lazyload"
-                            alt="image with artdirection" />
-                    </picture>
-                    {% else %}
-                        {% capture current %}{% cycle 1, 2 %}{% endcapture %}
-                        {{ 'lifestyle-' | append: current | placeholder_svg_tag: 'placeholder-svg placeholder-svg--' }}
+<section data-section-id="{{ section.id }}" data-section-type="slideshow-section" class="slideshow">
+    {% comment %} No slides {% endcomment %}
+    {% comment %} <iframe src="https://player.vimeo.com/video/286754547?background=1&autoplay=1&loop=1&byline=0&title=0"
+           frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe> {% endcomment %}
+    {% if section.blocks.size == 0 %}
+        <div class="placeholder-noblocks">
+        {{ 'homepage.onboarding.no_content' | t }}
+        </div>
+    {% else %}
+        {% comment %} Wrapper for entire slideshow {% endcomment %}
+        <div class="slideshow-wrapper">
+            {% comment %} Slideshow element {% endcomment %}
+            <div class="slideshow slideshow--small" id="Slideshow-{{ section.id }}" data-autoplay="{{ section.settings.autoplay }}" data-speed="{{ section.settings.slide_duration }}000">
+                {% for block in section.blocks %}
+                    {% comment %} Determine if background video or not {% endcomment %}
+                    {%- assign is_background_video = false -%}
+                    {% if block.type == 'video' %}
+                        {% if block.settings.video_type == 'background' or block.settings.video_type =='background-chrome' %}
+                            {%- assign is_background_video = true -%}
+                        {% endif %}
                     {% endif %}
-                    <div class="caption caption--{{block.settings.animate}}">
-                        <h2 class="caption__heading">{{block.settings.title}}</h1>
-                        <div class="caption__text">{{block.settings.sub_head}}</div>
-                        <a href="{{block.settings.link}}" class="caption__btn btn">{{block.settings.link_text}}</a>
+                    {% comment %} Start of slide {% endcomment %}
+                    <div class="slideshow__slide slideshow__slide--{{ block.id }}{% if is_background_video %} slideshow__slide--background-video{% endif %}" {{ block.shopify_attributes }}>
+                        {% if block.type == 'image' %}
+                            {% comment %} Slide is an image {% endcomment %}
+                            {% if block.settings.image != blank %}
+                                <picture>
+                                <!--[if IE 9]><video style="display: none;><![endif]-->
+                                <source
+                                    data-srcset="{{ block.settings.m_image | img_url: '400x' }}"
+                                    media="--small" />
+                                <source
+                                    data-srcset="{{ block.settings.m_image | img_url: '800x' }} 400w"
+                                    media="--medium" />
+                                <source
+                                    data-srcset="{{ block.settings.image | img_url: '1000x' }}"
+                                    media="--large" />
+                                <source
+                                        data-srcset="{{ block.settings.image | img_url: '1600x' }}" />
+                                    <!--[if IE 9]></video><![endif]-->
+                                    <img
+                                        src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+                                        data-src="{{ block.settings.image | img_url: '1600x' }}"
+                                        class="lazyload"
+                                        alt="{{block.settings.image.alt}}" />
+                                </picture>
+                                {% else %}
+                                    {% capture current %}{% cycle 1, 2 %}{% endcapture %}
+                                    {{ 'lifestyle-' | append: current | placeholder_svg_tag: 'placeholder-svg placeholder-svg--' }}
+                            {% endif %}
+                        {% elsif block.type == 'video' %}
+                            {% comment %} Slide is a video {% endcomment %}
+                            {% if block.settings.video_url != blank %}
+                                {% comment %} Loader element while video is loading{% endcomment %}
+                                {% comment %} Worry about this when I get videos working {% endcomment %}
+                                {% comment %} <div class="video-loader"></div> {% endcomment %}
+                            {% endif %}
+                            {% unless block.settings.video_type == 'background' %}
+                                {% comment %} Add button to close video if not background {% endcomment %}
+                                {% comment %} <button type="button" class="text-link slideshow__video-control slideshow__video-control--close" data-controls="SlideshowVideo-{{ block.id }}">
+                                {% include 'icon-close' %}
+                                <span class="icon__fallback-text">{{ 'sections.slideshow.close_video' | t }}</span>
+                                </button> {% endcomment %}
+                            {% endunless %}
+                            {% if block.settings.video_url != blank %}
+                                {% comment %} A video url does exist {% endcomment %}
+                                <div id="SlideshowVideo-{{ block.id }}" class="slideshow__video {% if is_background_video %}slideshow__video--background{% endif %} slideshow__video--{{ block.settings.video_type }} slideshow__video--{{block.settings.video_url.type}}"
+                                data-id="{{ block.settings.video_url.id }}"
+                                data-platform="{{ block.settings.video_url.type}}"
+                                data-type="{{ block.settings.video_type }}"
+                                data-slideshow="Slideshow-{{ section.id }}">
+                                </div>
+                            {% endif %}
+                        {% endif %}
+                        {% unless block.settings.video_type == 'background' %}
+                        
+                        {% comment %} <div class="slideshow__video-control--play-wrapper{% if block.settings.title != blank or block.settings.subheading != blank %} slideshow__video-control--play-wrapper--push{% endif %}">
+                            <button type="button" class="text-link slideshow__video-control slideshow__video-control--play" data-controls="SlideshowVideo-{{ block.id }}">
+                            PLAY
+                            <span class="icon__fallback-text">{{ 'sections.slideshow.play_video' | t }}</span>
+                            </button>
+                        </div> {% endcomment %}
+                        {% endunless %}
                     </div>
-                </li>
-            {% else %}
-                    {% for i in (1..6) %}
-                         {% capture current %}{% cycle 1, 2 %}{% endcapture %}
-                        <li>{{ 'lifestyle-' | append: current | placeholder_svg_tag: 'placeholder-svg placeholder-svg--' }}</li>
-                    {% endfor %}
-            {% endfor %}
-            </ul>
-        </div>  
+
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
 </section>
 
 {% schema %}
@@ -56,6 +98,12 @@
         "id": "title",
         "label": "Heading",
         "default": "Slideshow"
+      },
+      {
+        "type": "checkbox",
+        "id": "autoplay",
+        "label": "Auto-rotate slides",
+        "default": true
       },
       {
         "type":   "range",
@@ -71,8 +119,8 @@
     "max_blocks": 6,
     "blocks": [
       {
-        "type": "slide",
-        "name": "Slide",
+        "type": "image",
+        "name": "Image",
         "settings": [
           {
             "id": "image",
@@ -116,6 +164,19 @@
               "label": "Animate direction"
           }
         ]
+      },
+      {
+        "type": "video",
+        "name": "Video",
+        "settings": [
+            {
+                "type": "video_url",
+                "id": "video_url",
+                "label": "Video link",
+                "accept": ["youtube", "vimeo"],
+                "default": "https:\/\/www.youtube.com\/watch?v=_9VUPq3SxOc"
+            }
+        ]
       }
     ],
     "presets": [
@@ -127,7 +188,7 @@
         },
         "blocks": [
           {
-            "type": "slide",
+            "type": "image",
             "settings": {
               "title": "Slide 1 Here",
               "sub_head": "Slide 1 Heading",
@@ -135,7 +196,7 @@
             }
           },
           {
-            "type": "slide",
+            "type": "image",
             "settings": {
               "title": "Slide 2 Here",
               "sub_head": "Slide 2 Heading",

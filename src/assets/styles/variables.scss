@@ -1,33 +1,84 @@
 // Text colors
-$color-body-text: var(--color-body-text);
+// $color-body-text: var(--color-body-text);
 // Background colors
-$color-body: var(--color-main-background);
+// $color-body: var(--color-main-background);
 // Placeholders
 $placeholder-color-foreground: #161d25;
 $placeholder-color-background: #f9fafb;
 // Other colors
-$color-accent: var(--color-accent);
+// $color-accent: var(--color-accent);
 $color-border: var(--color-border);
 // Button colors
-$button-bg-color: var(--color-button-bg);
-$button-color: var(--color-button-text);
+// $button-bg-color: var(--color-button-bg);
+// $button-color: var(--color-button-text);
 //Promo
-$promo-text-color: var(--promo-text-color);
-$promo-bg-color: var(--promo-background-color);
+// $promo-text-color: var(--promo-text-color);
+// $promo-bg-color: var(--promo-background-color);
 //Main Navigation
-$nav-color: var(--nav-color);
-$nav-hover-color: var(--nav-hover-color);
-$nav-background-color: var(--nav-background-color);
-$nav-dropdown-color: var(--nav-dropdown-color);
-$nav-dropdown-hover-color: var(--nav-dropdown-hover-color);
-$nav-dropdown-background-color: var(--nav-dropdown-background-color);
-$nav-megamenu-color: var(--nav-megamenu-color);
-$nav-megamenu-hover-color: var(--nav-megamenu-hover-color);
-$nav-megamenu-background-color: var(--nav-megamenu-background-color);
+// $nav-color: var(--nav-color);
+// $nav-hover-color: var(--nav-hover-color);
+// $nav-background-color: var(--nav-background-color);
+// $nav-dropdown-color: var(--nav-dropdown-color);
+// $nav-dropdown-hover-color: var(--nav-dropdown-hover-color);
+// $nav-dropdown-background-color: var(--nav-dropdown-background-color);
+// $nav-megamenu-color: var(--nav-megamenu-color);
+// $nav-megamenu-hover-color: var(--nav-megamenu-hover-color);
+// $nav-megamenu-background-color: var(--nav-megamenu-background-color);
 //Footer
-$footer-background-color: var(--footer-background-color);
-$footer-text-color: var(--footer-text-color);
-$footer-link-color: var(--footer-link-color);
+// $footer-background-color: var(--footer-background-color);
+// $footer-text-color: var(--footer-text-color);
+// $footer-link-color: var(--footer-link-color);
+/* New Styles */
+
+//Promo bar
+$promo-background: var(--promo-background);
+$promo-text: var(--promo-text);
+$promo-link: var(--promo-link);
+$promo-link-hover: var(--promo-link-hover);
+//Header
+$header-background: var(--header-background);
+//Desktop Navigation
+$desktop-nav-background: var(--desktop-nav-background);
+$desktop-nav-link: var(--desktop-nav-link);
+$desktop-nav-link-hover: var(--desktop-nav-link-hover);
+//Dropdown Navigation
+$dropdown-background: var(--dropdown-background);
+$dropdown-link: var(--dropdown-link);
+$dropdown-link-hover: var(--dropdown-link-hover);
+//Mega Menu Navigation
+$megamenu-background: var(--megamenu-background);
+$megamenu-link: var(--megamenu-link);
+$megamenu-link-hover: var(--megamenu-link-hover);
+//Mobile Navigation
+$mobile-nav-background: var(--mobile-nav-background);
+$mobile-nav-link: var(--mobile-nav-link);
+$mobile-nav-link-hover: var(--mobile-nav-link-hover);
+//Footer Styles
+$footer-background: var(--footer-background);
+$footer-link: var(--footer-link);
+$footer-link-hover: var(--footer-link-hover);
+$footer-text: var(--footer-text);
+$footer-input-background: var(--footer-input-background);
+$footer-input: var(--footer-input);
+$footer-button-background: var(--footer-button-background);
+$footer-button: var(--footer-button);
+$footer-icon: var(--footer-icon);
+//Newsletter Styles
+$newsletter-background: var(--newsletter-background);
+$newsletter-text: var(--newsletter-text);
+$newsletter-input-background: var(--newsletter-input-background);
+$newsletter-input: var(--newsletter-input);
+$newsletter-button-background: var(--newsletter-button-background);
+$newsletter-button: var(--newsletter-button);
+//General Styles
+$general-background: var(--general-background);
+$general-text: var(--general-text);
+$general-link: var(--general-link);
+$general-link-hover: var(--general-link-hover);
+$general-button-background: var(--general-button-background);
+$general-button: var(--general-button);
+$general-accent: var(--general-accent);
+$general-icon: var(--general-icon);
 // Helper colors for form error states
 $color-disabled: #000000;
 $color-disabled-border: #000000;
@@ -35,6 +86,7 @@ $color-error: #ff6d6d;
 $color-error-bg: #ffffff;
 $color-success: #000000;
 $color-success-bg: #000000;
+$navbar-height: 60px;
 // Typography
 $font-heading: var(--font-heading);
 $font-body: var(--font-body);
@@ -59,13 +111,4 @@ $large: "large";
 $large-down: "large-down";
 $large-up: "large-up";
 $widescreen: "widescreen";
-$breakpoints: (
-  $small "(max-width: #{$grid-medium - 1})",
-  $medium "(min-width: #{$grid-medium}) and (max-width: #{$grid-large - 1})",
-  $medium-down "(max-width: #{$grid-large - 1})",
-  $medium-up "(min-width: #{$grid-medium})",
-  $large "(min-width: #{$grid-large}) and (max-width: #{$grid-widescreen - 1})",
-  $large-down "(max-width: #{$grid-widescreen - 1})",
-  $large-up "(min-width: #{$grid-large})",
-  $widescreen "(min-width: #{$grid-widescreen})"
-);
+$breakpoints: ( $small "(max-width: #{$grid-medium - 1})", $medium "(min-width: #{$grid-medium}) and (max-width: #{$grid-large - 1})", $medium-down "(max-width: #{$grid-large - 1})", $medium-up "(min-width: #{$grid-medium})", $large "(min-width: #{$grid-large}) and (max-width: #{$grid-widescreen - 1})", $large-down "(max-width: #{$grid-widescreen - 1})", $large-up "(min-width: #{$grid-large})", $widescreen "(min-width: #{$grid-widescreen})");

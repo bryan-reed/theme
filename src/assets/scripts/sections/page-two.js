@@ -7,7 +7,7 @@ sections.register("page-two", {
   onLoad(e) {
     // Get the element
 
-    this.slideshow();
+    // this.slideshow();
     this.carousel();
   },
   carousel() {

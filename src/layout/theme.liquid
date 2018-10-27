@@ -45,7 +45,8 @@
         unavailable: {{ 'products.product.unavailable' | t | json }},
         addedToCart: {{'products.product.added_to_cart' | t | json}}
       },
-      moneyFormat: {{ shop.money_format | json }}
+      moneyFormat: {{ shop.money_format | json }},
+      mapKey: {{ settings.api_key | json }} || ''
     };
   </script>
 
@@ -57,7 +58,7 @@
 <body id="{{ page_title | handle }}" class="template-{{ template.name | handle }}">
 
   <a class="in-page-link visually-hidden skip-link" href="#MainContent">{{ 'general.accessibility.skip_to_content' | t }}</a>
-
+  <div class="master-container">
   {% section 'header' %}
   {% section 'main-nav' %}
 
@@ -66,6 +67,6 @@
   </main>
 
   {% section 'footer' %}
-
+  </div>
 </body>
 </html>

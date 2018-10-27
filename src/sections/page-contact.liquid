@@ -1,0 +1,97 @@
+{% comment %} <div class="rte">
+  {{ page.content }}
+</div> {% endcomment %}
+<div data-section-id="{{ section.id }}" data-section-type="page-contact" class="page-contact container desktop-{{section.settings.desktop_layout}} mobile-{{section.settings.mobile_layout}}">
+    <div class="map">
+        <div class="map-section__container" id="Map-{{ section.id }}" data-address-setting="{{ section.settings.map_address | escape }}" data-marker-color="{{ settings.color_button_bg }}">
+        </div>
+    </div>
+    <div class="form">
+        {% form 'contact' %}
+
+            {% if form.posted_successfully? %}
+                <p class="form-success">
+                {{ 'contact.form.post_success' | t }}
+                </p>
+            {% endif %}
+
+            {{ form.errors | default_errors }}
+
+            {% comment %} <label for="ContactFormName">{{ 'contact.form.name' | t }}</label> {% endcomment %}
+            <input type="text"
+                name="contact[name]"
+                id="ContactFormName"
+                placeholder="{{ 'contact.form.name' | t }}"
+                value="{% if form[name] %}{{ form[name] }}{% elsif customer %}{{ customer.name }}{% endif %}">
+
+            {% comment %} <label for="ContactFormEmail">{{ 'contact.form.email' | t }}</label> {% endcomment %}
+            <input type="email"
+                name="contact[email]"
+                id="ContactFormEmail"
+                placeholder="{{ 'contact.form.email' | t }}"
+                value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
+                spellcheck="false"
+                autocomplete="off"
+                autocapitalize="off">
+
+            {% comment %} <label for="ContactFormPhone">{{ 'contact.form.phone' | t }}</label> {% endcomment %}
+            <input type="tel"
+                name="contact[phone]"
+                id="ContactFormPhone"
+                placeholder="{{ 'contact.form.phone' | t }}"
+                value="{% if form[phone] %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}"
+                pattern="[0-9\-]*">
+
+            {% comment %} <label for="ContactFormMessage">{{ 'contact.form.message' | t }}</label> {% endcomment %}
+            <textarea rows="5"
+                name="contact[body]"
+                id="ContactFormMessage"
+                placeholder="{{ 'contact.form.message' | t }}">
+                {%- if form.body -%}
+                {{- form.body -}}
+                {%- endif -%}
+            </textarea>
+
+            <input type="submit" class="button btn" value="{{ 'contact.form.send' | t }}">
+
+        {% endform %}
+    </div>
+    <div class="content rte">
+        {{ page.content }}
+    </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Contact page",
+    "settings": [
+        {
+            "id": "map_address",
+            "type": "text",
+            "label": "Map address",
+            "info": "Google maps will find the exact location",
+            "default": "80 Spadina Ave, Toronto"
+        },
+        {
+            "id": "desktop_layout",
+            "type": "select",
+            "options": [
+            { "value": "1", "label": "1"},
+            { "value": "2", "label": "2"}
+            ],
+            "default": "1",
+            "label": "Desktop Layout"
+        },
+        {
+            "id": "mobile_layout",
+            "type": "select",
+            "options": [
+            { "value": "1", "label": "1"},
+            { "value": "2", "label": "2"}
+            ],
+            "default": "1",
+            "label": "Mobile Layout"
+        }
+    ]
+  }
+{% endschema %}

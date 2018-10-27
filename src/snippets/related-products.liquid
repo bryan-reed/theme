@@ -87,8 +87,8 @@
       {% unless product.handle == current_product.handle %}
          {% unless same_vendor and current_product.vendor != product.vendor %}
            {% unless same_type and current_product.type != product.type %}
-                 {% comment %} <a href="{{ product.url | within: collection }}" class="product-{{number_of_related_products_per_row}}"><img src="{{product.featured_image | img_url: '480x' }}" /></a> {% endcomment %}
-                <div class="product-{{number_of_related_products_per_row}}">
+                 <a href="{{ product.url | within: collection }}" class="product-{{number_of_related_products_per_row}}">
+                <div>
                     <div class="featured-collection__product">
                       <div class="product-image">
                         <div class="first">
@@ -108,6 +108,7 @@
                         </div>
                     </div>
                 </div>
+                </a>
              {% assign counter = counter | plus: 1 %}
              {% if counter == break_at %}
                {% break %}

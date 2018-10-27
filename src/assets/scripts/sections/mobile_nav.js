@@ -10,13 +10,69 @@ class mobileNav {
     this.dropdownsDown = ".layout-down .mega-menu>a, .layout-down .dropdown>a";
     this.backBtn = ".side-back";
     this.appended = ".appended-remove";
+    this.navWrapper = ".navigation";
+    this.navContent = ".navigation__main";
+
+    //Non links
+    this.links =
+      ".mega-menu li:not(.mega-menu-2) a, .dropdown li:not(.dropdown-2) a";
+    //Dropdown / megamenu
+    this.megaMenuLink = ".mega-menu";
+    this.dropDownLink = ".dropdown";
+
+    //Dropdown / mega menu second level
+    this.megaMenuLink2 = ".mega-menu-2";
+    this.dropDownLink2 = ".dropdown-2";
+
+    //Dropdown / mega menu second level
+    this.megaMenuLink3 = ".mega-menu-2 li a";
+    this.dropDownLink3 = ".dropdown-2 li a";
 
     //Start listening for events
     this.events();
   }
   events() {
     $(document).on("click", this.openMenuTrigger, this.openMenu.bind(this));
+    $(document).on("click", this.navWrapper, this.closeMenu.bind(this));
+    $(document).on("click", this.navContent, e => e.stopPropagation());
     $(document).on("click", this.closeMenuTrigger, this.closeMenu.bind(this));
+    $(document).on("click", this.links, e => {
+      // e.preventDefault();
+      e.stopPropagation();
+
+      return true;
+      console.log(e);
+    });
+    $(document).on(
+      "click",
+      this.megaMenuLink,
+      this.toggleSubNav.bind(this, this.megaMenuLink)
+    );
+    $(document).on(
+      "click",
+      this.megaMenuLink2,
+      this.toggleSubNav2.bind(this, this.megaMenuLink2)
+    );
+    $(document).on(
+      "click",
+      this.dropDownLink,
+      this.toggleSubNav.bind(this, this.dropDownLink)
+    );
+    $(document).on(
+      "click",
+      this.dropDownLink2,
+      this.toggleSubNav2.bind(this, this.dropDownLink2)
+    );
+    $(document).on(
+      "click",
+      this.dropDownLink3,
+      this.toggleSubNav3.bind(this, this.dropDownLink3)
+    );
+    $(document).on(
+      "click",
+      this.megaMenuLink3,
+      this.toggleSubNav3.bind(this, this.megaMenuLink3)
+    );
     $(document).on(
       "click",
       this.dropdownsLeft,
@@ -34,21 +90,22 @@ class mobileNav {
   //   Open the mobile menu
   openMenu() {
     $(this.openMenuTrigger).toggleClass("mobile-open");
-    if (!$(this.openMenuTrigger).hasClass("mobile-open")) {
-      $(".main-nav__top").removeClass("sub-open");
-      $(".main-nav__top li").removeClass("open");
-      $(this.appended).remove();
-    }
-    $(document)
-      .find(this.menuContainer)
-      .toggleClass("mobile-open");
-    $(document)
-      .find(this.closeMenuTrigger)
-      .addClass("mobile-open");
-    //Add close button only to left layout
-    if ($(".main-nav.layout-left").length) {
-      $(".main-nav ul").append('<li class="mobile-nav-close">&#10005;</li>');
-    }
+    // if (!$(this.openMenuTrigger).hasClass("mobile-open")) {
+    //   $(".main-nav__top").removeClass("sub-open");
+    //   $(".main-nav__top li").removeClass("open");
+    //   $(this.appended).remove();
+    // }
+    $(".navigation").addClass("mobile-open");
+    // $(document)
+    //   .find(this.menuContainer)
+    //   .toggleClass("mobile-open");
+    // $(document)
+    //   .find(this.closeMenuTrigger)
+    //   .addClass("mobile-open");
+    // //Add close button only to left layout
+    // if ($(".main-nav.layout-left").length) {
+    //   $(".main-nav ul").append('<li class="mobile-nav-close">&#10005;</li>');
+    // }
     // this.toggle.toggleClass("mobile-open");
     // $(document)
     //   .find(this.menuBackground)
@@ -57,10 +114,14 @@ class mobileNav {
   //Close the mobile menu
   closeMenu() {
     $(this.openMenuTrigger).removeClass("mobile-open");
-    $(document)
-      .find(this.menuContainer)
-      .removeClass("mobile-open");
-    $(this.closeMenuTrigger).remove();
+    $(".navigation").removeClass("mobile-open");
+    $(".navigation")
+      .find(".open")
+      .removeClass("open");
+    // $(document)
+    //   .find(this.menuContainer)
+    //   .removeClass("mobile-open");
+    // $(this.closeMenuTrigger).remove();
     //   $(document)
     //     .find(this.menuBackground)
     //     .removeClass("mobile-open");
@@ -118,6 +179,34 @@ class mobileNav {
       .parent("li")
       .parent("ul")
       .toggleClass("sub-open");
+  }
+  //new
+  toggleSubNav(type, e) {
+    e.preventDefault();
+    e.stopPropagation();
+    $(e.target)
+      .closest(type)
+      .toggleClass("open");
+    $(e.target)
+      .closest(type)
+      .find(">ul")
+      .slideToggle("fast");
+  }
+  toggleSubNav2(type, e) {
+    console.log("nav here?");
+    e.preventDefault();
+    e.stopPropagation();
+    $(e.target)
+      .closest(type)
+      .toggleClass("open");
+    $(e.target)
+      .closest(type)
+      .find("ul:first-of-type")
+      .slideToggle("fast");
+  }
+  toggleSubNav3(type, e) {
+    e.stopPropagation();
+    return true;
   }
 }
 export default mobileNav;

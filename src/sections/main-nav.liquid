@@ -1,10 +1,7 @@
-<section data-section-id="{{ section.id }}" data-section-type="navigation">
+<section data-section-id="{{ section.id }}" data-section-type="navigation" style="display: none;">
 {% comment %} Get mega menu blocks into new array, then join it into a string so we can then downcase it, then split back into array {% endcomment %}
 {% assign megaMenus = section.blocks | map: 'settings' | map: 'title' | join: ',' | downcase | split: ','  %}
 <nav class="main-nav container layout-{{section.settings.mobile_navigation_layout}} desktop-layout" role="navigation">
-    {% comment %} <div class="mobile-nav-close">
-        &#10005;
-    </div> {% endcomment %}
     <ul class="main-nav__top">
     {% for link in linklists[section.settings.menu].links %}
         {% assign linkValue = link.title | downcase %}
@@ -51,7 +48,58 @@
     {% endfor %}
     </ul>
 </nav>
-<div class="mobile-nav-background"></div>
+</section>
+{% assign megaMenus = section.blocks | map: 'settings' | map: 'title' | join: ',' | downcase | split: ','  %}
+<section data-section-id="{{ section.id }}" data-section-type="navigation">
+  <nav class="navigation">
+    <ul class="navigation__main">
+    {% for link in linklists[section.settings.menu].links %}
+        {% assign linkValue = link.title | downcase %}
+        {% if megaMenus contains linkValue %}
+        <li class="mega-menu">
+            <a href="{{ link.url }}">{{link.title}}</a>
+            {% for block in section.blocks %}
+                {% assign blockValue = block.settings.title | downcase %}
+                {% if blockValue == linkValue %}
+                    {% include 'mega-menu' %}
+                    {% break %}
+                {% endif %}
+            {% endfor %}
+        </li>
+        {% elsif link.links != blank %}
+        <li class="dropdown">
+            <a href="{{ link.url }}">{{link.title}}</a>
+            <ul>
+            {% for childlink in link.links %}
+                <li {% if childlink.links != blank %}
+                    class="dropdown-2"
+                {% endif %}>
+                <a href="{{ childlink.url }}">
+                    {{ childlink.title }}
+                </a>
+                {% if childlink.links != blank %}
+                        <ul>
+                        {% for grandchildLink in childlink.links %}
+                            <li>
+                            <a href="{{ grandchildLink.url }}">
+                                {{ grandchildLink.title }}
+                            </a>
+                            </li>
+                        {% endfor %}
+                        </ul>
+                    {% endif %}
+                </li>
+            {% endfor %}
+            </ul>
+        </li>
+        {% else %}
+            <li><a href="{{ link.url }}">{{link.title}}</a></li>
+        {% endif %}
+    {% endfor %}
+    </ul>
+    
+  </nav>
+
 </section>
 
 {% schema %}

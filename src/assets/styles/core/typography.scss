@@ -1,12 +1,13 @@
 html {
-  font-size: 62.5%;
+    font-size: 62.5%;
 }
 
 body {
-  font-family: $font-body;
-  font-weight: $font-body-weight;
-  font-style: $font-body-style;
-  font-size: 1.6rem;
+    font-family: $font-body;
+    font-weight: $font-body-weight;
+    font-style: $font-body-style;
+    font-size: 1.6rem;
+    color: $general-text;
 }
 
 h1,
@@ -15,7 +16,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: $font-heading;
+    font-family: $font-heading;
 }
 
 body,
@@ -23,15 +24,24 @@ input,
 textarea,
 button,
 select {
-  -webkit-font-smoothing: antialiased;
-  text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
+    text-size-adjust: 100%;
 }
 
 a {
-  color: var(--color-link);
-  text-decoration: none;
+    color: $general-link;
+    text-decoration: none;
+}
+
+a:hover {
+    color: $general-link-hover;
 }
 
 a:focus {
-  color: inherit;
+    color: inherit;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
 }

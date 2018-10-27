@@ -299,7 +299,11 @@ sections.register("collection-template", {
         ${images}
       </div>
       <div class="main_content">
-      <span class="vendor">${this.currentProduct.vendor}</span>
+      ${
+        this.quickViewSettings.vendor
+          ? '<span class="vendor">' + this.currentProduct.vendor + "</span>"
+          : ""
+      }
       <h2>${this.currentProduct.title}</h2>
       <span class="price" data-price>${formatMoney(
         this.currentProduct.price,
@@ -340,7 +344,7 @@ sections.register("collection-template", {
   },
   //Expand accordion
   openSideNav(e) {
-    console.log("SIDE NAV CLICKED", e);
+    // console.log("SIDE NAV CLICKED", e);
     $(e.target)
       .closest("li.top-lvl")
       .toggleClass("open");
@@ -356,25 +360,23 @@ sections.register("collection-template", {
     this.numProducts = data.collection.products_count;
     let that = this;
     this.loadProducts().done(function() {
-      console.log(that);
+      // console.log(that);
     });
   },
   loadProducts() {
     let that = this;
     if (this.products.length != this.numProducts) {
-      return $
-        .ajax({
-          url: `https://${selectors.store}/collections/${
-            this.collection
-          }/products.json?limit=500&page=${this.page++}`,
-          dataType: "json"
-        })
-        .done(function(resp) {
-          if (resp.products.length) {
-            that.products = that.products.concat(resp.products);
-            that.loadProducts();
-          }
-        });
+      return $.ajax({
+        url: `https://${selectors.store}/collections/${
+          this.collection
+        }/products.json?limit=500&page=${this.page++}`,
+        dataType: "json"
+      }).done(function(resp) {
+        if (resp.products.length) {
+          that.products = that.products.concat(resp.products);
+          that.loadProducts();
+        }
+      });
     } else {
       return false;
     }

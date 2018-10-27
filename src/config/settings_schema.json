@@ -11,40 +11,273 @@
     "name": "Colors",
     "settings": [
       {
-        "type": "color",
-        "id": "color_accent",
-        "label": "Accent",
-        "default": "#c4cdd5",
-        "info": "Buttons and special ornaments"
+        "type": "header",
+        "content": "Promo Message Bar"
       },
       {
         "type": "color",
-        "id": "color_body_text",
-        "label": "Text",
-        "default": "#161d25"
+        "id": "promo_background",
+        "label": "Background Color",
+        "default": "#E6E6E6"
       },
       {
         "type": "color",
-        "id": "color_main_bg",
-        "label": "Background",
-        "default": "#fff"
+        "id": "promo_text",
+        "label": "Text Color",
+        "default": "#F10003"
       },
       {
         "type": "color",
-        "id": "color_button_bg",
-        "label": "Button Background Color",
+        "id": "promo_link",
+        "label": "Link Color",
+        "default": "#0093F6"
+      },
+      {
+        "type": "color",
+        "id": "promo_link_hover",
+        "label": "Link Hover Color",
+        "default": "#1A1A1A"
+      },
+      {
+        "type": "header",
+        "content": "Header"
+      },
+      {
+        "type": "color",
+        "id": "header_background",
+        "label": "Background Color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "header",
+        "content": "Desktop Navigation"
+      },
+      {
+        "type": "color",
+        "id": "desktop_nav_background",
+        "label": "Background Color",
+        "default": "#1A1A1A"
+      },
+      {
+        "type": "color",
+        "id": "desktop_nav_link",
+        "label": "Link Color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "color",
+        "id": "desktop_nav_link_hover",
+        "label": "Link Hover Color",
+        "default": "#0093F6"
+      },
+      {
+        "type": "header",
+        "content": "Drop Down Menu"
+      },
+      {
+        "type": "color",
+        "id": "dropdown_background",
+        "label": "Background Color",
+        "default": "#1A1A1A"
+      },
+      {
+        "type": "color",
+        "id": "dropdown_link",
+        "label": "Link Color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "color",
+        "id": "dropdown_link_hover",
+        "label": "Link Hover Color",
+        "default": "#0093F6"
+      },
+      {
+        "type": "header",
+        "content": "Mega Menu"
+      },
+      {
+        "type": "color",
+        "id": "megamenu_background",
+        "label": "Background Color",
+        "default": "#1A1A1A"
+      },
+      {
+        "type": "color",
+        "id": "megamenu_link",
+        "label": "Link Color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "color",
+        "id": "megamenu_link_hover",
+        "label": "Link Hover Color",
+        "default": "#0093F6"
+      },
+      {
+        "type": "header",
+        "content": "Mobile Navigation"
+      },
+      {
+        "type": "color",
+        "id": "mobile_nav_background",
+        "label": "Background Color",
+        "default": "#1A1A1A"
+      },
+      {
+        "type": "color",
+        "id": "mobile_nav_link",
+        "label": "Link Color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "header",
+        "content": "Footer"
+      },
+      {
+        "type": "color",
+        "id": "footer_background",
+        "label": "Background Color",
+        "default": "#1A1A1A"
+      },
+      {
+        "type": "color",
+        "id": "footer_link",
+        "label": "Link Color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "color",
+        "id": "footer_link_hover",
+        "label": "Link Hover Color",
+        "default": "#0093F6"
+      },
+      {
+        "type": "color",
+        "id": "footer_text",
+        "label": "Text Color",
+        "default": "#E6E6E6"
+      },
+      {
+        "type": "color",
+        "id": "footer_input_background",
+        "label": "Newsletter Input Background Color",
+        "default": "#E6E6E6"
+      },
+      {
+        "type": "color",
+        "id": "footer_input",
+        "label": "Newsletter Input Color",
+        "default": "#1A1A1A"
+      },
+      {
+        "type": "color",
+        "id": "footer_button_background",
+        "label": "Newsletter Button Background Color",
+        "default": "#F10003"
+      },
+      {
+        "type": "color",
+        "id": "footer_button",
+        "label": "Newsletter Button Color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "color",
+        "id": "footer_icon",
+        "label": "Icon Color",
         "default": "#000"
       },
       {
-        "type": "color",
-        "id": "color_button_text",
-        "label": "Button Text Color",
-        "default": "#fff"
+        "type": "header",
+        "content": "Newsletter Pop Up"
       },
       {
         "type": "color",
-        "id": "link_color",
+        "id": "newsletter_background",
+        "label": "Background Color",
+        "default": "#F10003"
+      },
+      {
+        "type": "color",
+        "id": "newsletter_text",
+        "label": "Text Color",
+        "default": "#1A1A1A"
+      },
+      {
+        "type": "color",
+        "id": "newsletter_input_background",
+        "label": "Newsletter Input Background Color",
+        "default": "#E6E6E6"
+      },
+      {
+        "type": "color",
+        "id": "newsletter_input",
+        "label": "Newsletter Input Color",
+        "default": "#1A1A1A"
+      },
+      {
+        "type": "color",
+        "id": "newsletter_button_background",
+        "label": "Newsletter Button Background Color",
+        "default": "#1A1A1A"
+      },
+      {
+        "type": "color",
+        "id": "newsletter_button",
+        "label": "Newsletter Button Color",
+        "default": "#E6E6E6"
+      },
+      {
+        "type": "header",
+        "content": "General"
+      },
+      {
+        "type": "color",
+        "id": "general_background",
+        "label": "Background Color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "color",
+        "id": "general_text",
+        "label": "Text Color",
+        "default": "#1A1A1A"
+      },
+      {
+        "type": "color",
+        "id": "general_link",
         "label": "Link Color",
+        "default": "#0093F6"
+      },
+      {
+        "type": "color",
+        "id": "general_link_hover",
+        "label": "Link Hover Color",
+        "default": "#1A1A1A"
+      },
+      {
+        "type": "color",
+        "id": "general_button_background",
+        "label": "Button Background Color",
+        "default": "#F10003"
+      },
+      {
+        "type": "color",
+        "id": "general_button",
+        "label": "Button Text Color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "color",
+        "id": "general_accent",
+        "label": "Accent Color",
+        "default": "#F10003"
+      },
+      {
+        "type": "color",
+        "id": "general_icon",
+        "label": "Icon Color",
         "default": "#000"
       }
     ]
@@ -190,6 +423,21 @@
     ]
   },
   {
+    "name": "Maps",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Maps Settings"
+      },
+      {
+        "id": "api_key",
+        "type": "text",
+        "label": "Google Maps API key",
+        "info": "If your store experiences more than 2,500 visitors a day, you’ll need to generate both [JavaScript](https://developers.google.com/maps/documentation/javascript/get-api-key) and [Geocoding](https://developers.google.com/maps/documentation/geocoding/get-api-key) API keys"
+      }
+    ]
+  },
+  {
     "name": "Social media",
     "settings": [
       {
@@ -200,8 +448,7 @@
         "type": "image_picker",
         "id": "share_image",
         "label": "Image",
-        "info":
-          "Shown when sharing a link on social media. [Learn more](https://help.shopify.com/manual/using-themes/troubleshooting/showing-social-media-thumbnail-images/) about image thumbnails."
+        "info": "Shown when sharing a link on social media. [Learn more](https://help.shopify.com/manual/using-themes/troubleshooting/showing-social-media-thumbnail-images/) about image thumbnails."
       },
       {
         "type": "header",

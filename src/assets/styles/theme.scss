@@ -7,7 +7,7 @@
 @import "~slick-carousel/slick/slick.css";
 @import "./components/slick";
 // @import "~slick-carousel/slick/slick-theme.css";
-@import "./components/flexslider"; //Custom scss version of flexslider css
+// @import "./components/flexslider"; //Custom scss version of flexslider css
 // Settings
 @import "./variables";
 // Tools
@@ -37,6 +37,7 @@
 @import "./sections/featured-text";
 @import "./sections/featured-product";
 @import "./sections/newsletter";
+@import "./sections/map";
 @import "./sections/blog-posts";
 @import "./sections/footer";
 @import "./sections/collection-list";
@@ -46,3 +47,6 @@
 @import "./templates/gift_card";
 @import "./templates/product";
 @import "./templates/collection";
+@import "./templates/cart";
+@import "./templates/blog";
+@import "./templates/contact";

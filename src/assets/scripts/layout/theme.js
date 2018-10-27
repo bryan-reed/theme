@@ -12,6 +12,7 @@ import "lazysizes";
 import "lazysizes/plugins/respimg/ls.respimg";
 
 import "../../styles/theme.scss";
+
 import "../../styles/theme2.scss.liquid";
 
 import $ from "jquery";
@@ -20,12 +21,14 @@ import { cookiesEnabled } from "@shopify/theme-cart";
 import { wrapTable, wrapIframe } from "@shopify/theme-rte";
 
 import mobileNav from "../sections/mobile_nav";
+import StickyNav from "../sections/sticky_nav";
 
 window.slate = window.slate || {};
 window.theme = window.theme || {};
 
 $(document).ready(() => {
   const mobile_nav = new mobileNav();
+  const sticky_nav = new StickyNav();
   // Common a11y fixes
   if (window.location.hash !== "#") {
     pageLinkFocus($(window.location.hash));

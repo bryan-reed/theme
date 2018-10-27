@@ -11,9 +11,7 @@
 }
 
 .label-hidden {
-  @include visually-hidden;
-
-  // No placeholders, so force show labels
+  @include visually-hidden; // No placeholders, so force show labels
   .no-placeholder & {
     @include visually-shown;
   }
@@ -26,7 +24,6 @@
 // Only show when JS is not supported
 .no-js:not(html) {
   display: none;
-
   .no-js & {
     display: block;
   }
@@ -42,7 +39,6 @@
 // Only show when browser cookies are not supported
 .supports-no-cookies:not(html) {
   display: none;
-
   html.supports-no-cookies & {
     display: block;
   }
@@ -61,13 +57,13 @@
   @include visually-shown(absolute);
   z-index: 10000;
   padding: $grid-gutter / 2;
-  background-color: $color-body;
-  color: $color-body-text;
+  background-color: $general-background;
+  color: $general-text;
   transition: none;
 }
 
 // Hide outline on focus for elements which are given focus by JS
-[tabindex='-1']:focus {
+[tabindex="-1"]:focus {
   outline: none;
 }
 

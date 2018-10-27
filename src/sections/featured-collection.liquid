@@ -53,7 +53,8 @@
           {% endif %}
         </span>
       </a> {% endcomment %}
-      <div class="products-{{section.settings.products_per_row}}">
+      <a href="{{ product.url | within: collection }}" class="products-{{section.settings.products_per_row}}">
+      <div>
           <div class="featured-collection__product">
             <div class="product-image">
               <div class="first">
@@ -81,6 +82,7 @@
               </div>
           </div>
       </div>
+      </a>
       
     {% else %}
       

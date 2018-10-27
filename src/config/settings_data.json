@@ -44,10 +44,10 @@
           "type": "slideshow",
           "blocks": {
             "slide-1": {
-              "type": "slide"
+              "type": "image"
             },
             "slide-2": {
-              "type": "slide"
+              "type": "image"
             }
           },
           "block_order": ["slide-1", "slide-2"]

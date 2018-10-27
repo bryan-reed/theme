@@ -31,7 +31,7 @@
     {{ image_layout }}
   {% endif %}
 
-  <div class="image-with-text__text">
+  <div class="image-with-text__text image-with-text__text--{{section.settings.text_position}}">
     {% if section.settings.title != blank %}
       <h2>{{ section.settings.title | escape }}</h2>
     {% endif %}
@@ -96,6 +96,26 @@
         "type": "url",
         "id": "button_link",
         "label": "Button link"
+      },
+      {
+        "type": "select",
+        "id": "text_position",
+        "label": "Position",
+        "default": "top",
+        "options": [
+          {
+            "value": "top",
+            "label": "Top"
+          },
+          {
+            "value": "middle",
+            "label": "Middle"
+          },
+          {
+            "value": "bottom",
+            "label": "Bottom"
+          }
+        ]
       }
     ],
     "presets": [

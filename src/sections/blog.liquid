@@ -1,0 +1,131 @@
+{% paginate blog.articles by 5 %}
+
+  {%- assign blog_title = blog.title -%}
+  {% if current_tags %}
+    {% capture blog_title %}{{ blog.title | link_to: blog.url }} &mdash; {{ current_tags.first }}{% endcapture %}
+  {% endif %}
+<div class="blog container {{section.settings.desktop_layout}}">
+  {% comment %} <h1>{{ blog_title }}</h1> {% endcomment %}
+
+  {% if blog.all_tags.size > 0 %}
+    <h2>{{ 'blogs.general.categories' | t }}</h2>
+
+    <ul>
+      {% for tag in blog.all_tags %}
+
+        {% if current_tags contains tag %}
+          <li>{{ tag }}</li>
+        {% else %}
+          <li>{{ tag | link_to_tag: tag }}</li>
+        {% endif %}
+
+      {% endfor %}
+    </ul>
+  {% endif %}
+
+
+  {% comment %}
+
+  Article Previews
+  ====================
+  {% endcomment %}
+  {% for article in blog.articles %}
+    <div class="blog__post">
+    {% if section.settings.mobile_layout == '2' %}
+        <h3 class="blog__title mobile_show">
+            <a href="{{ article.url }}">{{ article.title }}</a>
+        </h3>
+
+        {% capture date %}{{ article.published_at | time_tag: format: 'month_day_year' }}{% endcapture %}
+        <h5 class="blog__date mobile_show">
+        {{ 'blogs.article.author_on_date_html' | t: author: article.author, date: date }}
+        </h5>
+    {% endif %}
+        {% if article.image %}
+            <a href="{{ article.url }}" class="blog__image">
+                {% include 'responsive-image' with
+                image: article.image,
+                max_width: 1024,
+                max_height: 1024
+                %}
+            </a>
+        {% endif %}
+        <div class="blog__content">
+            <h3 class="blog__title{% if section.settings.mobile_layout == '2' %} mobile_hide {% endif %}">
+                <a href="{{ article.url }}">{{ article.title }}</a>
+            </h3>
+
+            {% capture date %}{{ article.published_at | time_tag: format: 'month_day_year' }}{% endcapture %}
+            <h5 class="blog__date{% if section.settings.mobile_layout == '2' %} mobile_hide {% endif %}">
+            {{ 'blogs.article.author_on_date_html' | t: author: article.author, date: date }}
+            </h5>
+            <div class="rte">
+            {% if article.excerpt.size > 0 %}
+                {{ article.excerpt }}
+            {% else %}
+                <p>
+                {{ article.content | strip_html | truncatewords: 100 }}
+                </p>
+            {% endif %}
+            </div>
+
+            {% if blog.comments_enabled? or article.tags.size > 0 %}
+            <ul>
+                {% if blog.comments_enabled? %}
+                <li>
+                    <a href="{{ article.url }}#comments">
+                    {{ 'blogs.comments.with_count' | t: count: article.comments_count }}
+                    </a>
+                </li>
+                {% endif %}
+
+                {% if article.tags.size > 0 %}
+                {% for tag in article.tags %}
+                    <li>
+                    <a href="{{ blog.url }}/tagged/{{ tag | handle }}">{{ tag }}</a>
+                    {% unless forloop.last %}, {% endunless %}
+                    </li>
+                {% endfor %}
+                {% endif %}
+            </ul>
+            {% endif %}
+
+            <p>
+            <a href="{{ article.url }}">{{ 'blogs.article.read_more' | t }} &rarr;</a>
+            </p>
+        </div>
+    </div>
+  {% endfor %}
+  {% if paginate.pages > 1 %}
+    {% include 'pagination' %}
+  {% endif %}
+
+{% endpaginate %}
+</div>
+{% schema %}
+  {
+    "name": "Blog posts",
+    "settings": [
+        {
+            "id": "desktop_layout",
+            "type": "select",
+            "options": [
+            { "value": "grid", "label": "Grid"},
+            { "value": "list", "label": "List"}
+            ],
+            "default": "grid",
+            "label": "Desktop Layout"
+        },
+        {
+            "id": "mobile_layout",
+            "type": "select",
+            "options": [
+            { "value": "1", "label": "Option 1"},
+            { "value": "2", "label": "Option 2"}
+            ],
+            "default": "1",
+            "label": "Mobile Layout"
+        }
+    ]
+  }
+{% endschema %}

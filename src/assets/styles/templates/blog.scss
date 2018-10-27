@@ -1,0 +1,47 @@
+.blog {
+    display: flex;
+    flex-direction: column;
+    &__post {
+        text-align: center;
+    }
+    .mobile_hide {
+        display: none;
+    }
+    .mobile_show {
+        display: block;
+    }
+    @include media-query($medium-up) {
+        .mobile_hide {
+            display: block;
+        }
+        .mobile_show {
+            display: none;
+        }
+        &.grid {
+            flex-direction: row;
+        }
+        &.list {
+            flex-direction: column;
+        }
+        &.grid &__post {
+            flex-basis: percentage(1/3);
+            padding: 15px;
+            text-align: center;
+        }
+        &.list &__post {
+            padding: 15px;
+            display: flex;
+            text-align: left;
+            justify-content: space-between;
+        }
+        &.list &__image {
+            flex-basis: 25%;
+        }
+        &.list &__content {
+            flex-basis: 70%;
+        }
+        &.list h3 {
+            margin-top: 0;
+        }
+    }
+}

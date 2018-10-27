@@ -39,7 +39,9 @@
                         <a href="{{ product.url | within: collection }}"><img src="{{product.featured_image | img_url: '400x'}}" alt="{{product.featured_image.alt}}" /></a>
                         <div class="quick_view_link btn" data-product="{{product.handle}}" data-variant="{{product.selected_or_first_available_variant.id}}">Quick View</div>
                         <div class="product-content">
-                            <h5>{{product.vendor}}</h5>
+                            {% if section.settings.show_vendor %}
+                                <h5>{{product.vendor}}</h5>
+                            {% endif %}
                             <a href="{{ product.url | within: collection }}"><h3>{{product.title}}</h3></a>
                             <span class="price">{{product.price | money}}</span>
                             {% include 'swatches' %}
@@ -69,6 +71,12 @@
             "type": "checkbox",
             "id": "show_collection_banner",
             "label": "Show collection banner",
+            "default": true
+        },
+        {
+            "type": "checkbox",
+            "id": "show_vendor",
+            "label": "Show product Vendor",
             "default": true
         },
         {
