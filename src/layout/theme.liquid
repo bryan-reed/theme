@@ -58,7 +58,6 @@
 <body id="{{ page_title | handle }}" class="template-{{ template.name | handle }}">
 
   <a class="in-page-link visually-hidden skip-link" href="#MainContent">{{ 'general.accessibility.skip_to_content' | t }}</a>
-  <div class="master-container">
   {% section 'header' %}
   {% section 'main-nav' %}
 
@@ -67,6 +66,5 @@
   </main>
 
   {% section 'footer' %}
-  </div>
 </body>
 </html>

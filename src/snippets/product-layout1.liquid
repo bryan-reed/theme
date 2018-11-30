@@ -1,0 +1,144 @@
+<div data-section-id="{{ section.id }}" data-section-type="product" data-enable-history-state="true" class="product container" data-layout="layout-{{section.settings.page_layout}}">
+  {%- assign current_variant = product.selected_or_first_available_variant -%}
+  {%- assign featured_image = current_variant.featured_image | default: product.featured_image -%}
+  <div class="prod-nav">
+    {% if collection.previous_product != blank %}
+    <a href="{{collection.previous_product}}"> &laquo; Previous</a>
+    {% else %}
+    <span>&nbsp;</span>
+    {% endif %}
+    {% if collection.next_product != blank %}
+    <a href="{{collection.next_product}}">Next &raquo;</a>
+    {% else %}
+    <span>&nbsp;</span>
+    {% endif %}
+  </div>
+  <div class="product__main_image{% if section.settings.thumbnail_align == 'bottom'%} full{% endif%}">
+    <div class="main_image">
+      <img src="{{featured_image | img_url: '900x'}}" alt="{{featured_image.alt}}" />
+    </div>
+    {% if section.settings.thumbnail_align == 'bottom' %}
+    {% if product.images.size > 1 %}
+    <div class="alt_images">
+      {% for image in product.images %}
+      <div class="detail_image">
+        <img class="product-single__thumbnail-image" src="{{ image.src | img_url: '160x160' }}" alt="{{ image.alt | escape }}">
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+    {% endif %}
+  </div>
+  {% if section.settings.thumbnail_align != 'bottom' and product.images.size > 1%}
+  <div class="product__alt_images product__alt_images--{{section.settings.thumbnail_align}}">
+    {% if product.images.size > 1 %}
+    {% for image in product.images %}
+    <div class="detail_image">
+      <img class="product-single__thumbnail-image" src="{{ image.src | img_url: '160x160' }}" alt="{{ image.alt | escape }}">
+    </div>
+    {% endfor %}
+    {% endif %}
+  </div>
+  {% endif %}
+
+  <div class="main_content">
+    <span class="vendor">{{product.vendor}}</span>
+    <h2>{{product.title}}</h2>
+    {% comment %} <small>{{current_variant.price | money}}</small> {% endcomment %}
+
+    {% comment %} <div class="btn_container">
+      <button class="add btn add_to_cart" disabled>Add to Bag</button>
+    </div> {% endcomment %}
+    <form action="/cart/add" method="post" enctype="multipart/form-data">
+      <div class="price" data-price-wrapper>
+        <span data-product-price>
+          {{ current_variant.price | money }}
+        </span>
+
+        {% if product.compare_at_price_max > product.price %}
+        <span class="visually-hidden" data-compare-text>{{ 'products.product.regular_price' | t }}</span>
+        <s data-compare-price>
+          {% if current_variant.compare_at_price > current_variant.price %}
+          {{ current_variant.compare_at_price | money }}
+          {% endif %}
+        </s>
+        {% endif %}
+      </div>
+      {% unless product.has_only_default_variant %}
+      {% for option in product.options_with_values %}
+      {% capture opt %}option{{option.position}}{% endcapture %}
+      <div class="selector-wrapper js clearfix">
+
+        <label for="SingleOptionSelector-{{ forloop.index0 }}" class="variant_label">
+          {{ option.name }}
+        </label>
+        {% if section.settings[opt] == 'swatch' or section.settings[opt] == 'swatch_name' or section.settings[opt] ==
+        'swatch_name_inside' %}
+        {% for value in option.values %}
+        <label class="swatch_container"><input type="radio" value="{{value}}" data-option="{{option.position}}"
+            data-single-option-selector name="variant_option{{option.position}}" data-index="option{{ option.position }}"
+            {% if option.selected_value==value %}checked="checked" {% endif %} class="variant_option{{ option.position }}" />
+          {% assign colorCheck = value | downcase %}
+          {% assign backgroundColor = 'white' %}
+          {% if webColors contains colorCheck %}
+          {% assign backgroundColor = value %}
+          {% endif %}
+          <span class="swatch {{section.settings.swatch_style}} {% unless section.settings[opt] == 'swatch_name_inside' %} color{% endunless %}"
+            style="background-color:{{value}}; background-image: url({{ value | handle | append: '.png'  | asset_url }})">
+            {% if section.settings[opt] == 'swatch_name_inside' %}
+            {{value | capitalize}}
+            {% endif %}
+          </span>
+          {% if section.settings[opt] == 'swatch_name' %}
+          <span>{{value | capitalize}}</span>
+          {% endif %}
+        </label>
+        {% endfor %}
+        {% else %}
+        <select id="SingleOptionSelector-{{ forloop.index0 }}" class="variant-dropdown" data-single-option-selector
+          data-index="option{{ option.position }}">
+          {% for value in option.values %}
+          <option value="{{ value | escape }}" {% if option.selected_value==value %}selected="selected" {% endif %}>
+            {{ value }}
+          </option>
+          {% endfor %}
+        </select>
+        {% endif %}
+
+      </div>
+      {% endfor %}
+      {% endunless %}
+
+      <select name="id" class="no-js" data-product-select>
+        {% for variant in product.variants %}
+        <option {% if variant==current_variant %}selected="selected" {% endif %} {% unless variant.available %}disabled="disabled"
+          {% endunless %} value="{{ variant.id }}">
+          {{ variant.title }}
+        </option>
+        {% endfor %}
+      </select>
+
+      <label for="Quantity" class="variant_label">{{ 'products.product.quantity' | t }}</label>
+      <input type="number" id="Quantity" name="quantity" class="variant-quantity" value="1" min="1">
+
+
+
+      <button type="submit" name="add" class="btn" data-add-to-cart {% unless current_variant.available
+        %}disabled="disabled" {% endunless %}>
+        <span data-add-to-cart-text>
+          {% if current_variant.available %}
+          {{ 'products.product.add_to_cart' | t }}
+          {% else %}
+          {{ 'products.product.sold_out' | t }}
+          {% endif %}
+        </span>
+      </button>
+    </form>
+    {% if section.settings.show_share_buttons %}
+    {% include 'social-sharing', share_title: product.title, share_permalink: product.url, share_image: product %}
+    {% endif %}
+    <div class="rte">
+      {{ product.description }}
+    </div>
+  </div>
+</div>

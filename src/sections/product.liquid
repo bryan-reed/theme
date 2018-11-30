@@ -4,32 +4,32 @@
   {%- assign featured_image = current_variant.featured_image | default: product.featured_image -%}
 
   {% for image in product.images %}
-    {% capture wrapper_class %}
-      {%- unless featured_image == image -%}
-        hide
-      {%- endunless -%}
-    {% endcapture %}
+  {% capture wrapper_class %}
+  {%- unless featured_image == image -%}
+  hide
+  {%- endunless -%}
+  {% endcapture %}
 
-    {% include 'responsive-image' with
-      image: image,
-      max_width: 700,
-      max_height: 800,
-      image_attributes: "data-product-featured-image",
-      wrapper_class: wrapper_class,
-      wrapper_attributes: "data-product-image-wrapper",
-    %}
+  {% include 'responsive-image' with
+  image: image,
+  max_width: 700,
+  max_height: 800,
+  image_attributes: "data-product-featured-image",
+  wrapper_class: wrapper_class,
+  wrapper_attributes: "data-product-image-wrapper",
+  %}
   {% endfor %}
 
   {% if product.images.size > 1 %}
-    <ul>
-      {% for image in product.images %}
-        <li>
-          <a href="{{ image.src | img_url: '480x480' }}" data-thumbnail-id="{{ image.id }}" data-product-single-thumbnail>
-            <img class="product-single__thumbnail-image" src="{{ image.src | img_url: '160x160' }}" alt="{{ image.alt | escape }}">
-          </a>
-        </li>
-      {% endfor %}
-    </ul>
+  <ul>
+    {% for image in product.images %}
+    <li>
+      <a href="{{ image.src | img_url: '480x480' }}" data-thumbnail-id="{{ image.id }}" data-product-single-thumbnail>
+        <img class="product-single__thumbnail-image" src="{{ image.src | img_url: '160x160' }}" alt="{{ image.alt | escape }}">
+      </a>
+    </li>
+    {% endfor %}
+  </ul>
   {% endif %}
 
   <h1>{{ product.title }}</h1>
@@ -38,36 +38,29 @@
 
   <form action="/cart/add" method="post" enctype="multipart/form-data">
     {% unless product.has_only_default_variant %}
-      {% for option in product.options_with_values %}
-        <div class="selector-wrapper js">
-          <label for="SingleOptionSelector-{{ forloop.index0 }}">
-            {{ option.name }}
-          </label>
+    {% for option in product.options_with_values %}
+    <div class="selector-wrapper js">
+      <label for="SingleOptionSelector-{{ forloop.index0 }}">
+        {{ option.name }}
+      </label>
 
-          <select
-            id="SingleOptionSelector-{{ forloop.index0 }}"
-            data-single-option-selector
-            data-index="option{{ option.position }}">
-            {% for value in option.values %}
-              <option
-                value="{{ value | escape }}"
-                {% if option.selected_value == value %}selected="selected"{% endif %}>
-                  {{ value }}
-              </option>
-            {% endfor %}
-          </select>
-        </div>
-      {% endfor %}
+      <select id="SingleOptionSelector-{{ forloop.index0 }}" data-single-option-selector data-index="option{{ option.position }}">
+        {% for value in option.values %}
+        <option value="{{ value | escape }}" {% if option.selected_value==value %}selected="selected" {% endif %}>
+          {{ value }}
+        </option>
+        {% endfor %}
+      </select>
+    </div>
+    {% endfor %}
     {% endunless %}
 
     <select name="id" class="no-js" data-product-select>
       {% for variant in product.variants %}
-        <option
-          {% if variant == current_variant %}selected="selected"{% endif %}
-          {% unless variant.available %}disabled="disabled"{% endunless %}
-          value="{{ variant.id }}">
-            {{ variant.title }}
-        </option>
+      <option {% if variant==current_variant %}selected="selected" {% endif %} {% unless variant.available %}disabled="disabled"
+        {% endunless %} value="{{ variant.id }}">
+        {{ variant.title }}
+      </option>
       {% endfor %}
     </select>
 
@@ -80,27 +73,24 @@
       </span>
 
       {% if product.compare_at_price_max > product.price %}
-        <span class="visually-hidden" data-compare-text>{{ 'products.product.regular_price' | t }}</span>
-        <s data-compare-price>
-          {% if current_variant.compare_at_price > current_variant.price %}
-            {{ current_variant.compare_at_price | money }}
-          {% endif %}
-        </s>
+      <span class="visually-hidden" data-compare-text>{{ 'products.product.regular_price' | t }}</span>
+      <s data-compare-price>
+        {% if current_variant.compare_at_price > current_variant.price %}
+        {{ current_variant.compare_at_price | money }}
+        {% endif %}
+      </s>
       {% endif %}
     </div>
 
-    <button
-      type="submit"
-      name="add"
-      data-add-to-cart
-      {% unless current_variant.available %}disabled="disabled"{% endunless %}>
-        <span data-add-to-cart-text>
-          {% if current_variant.available %}
-            {{ 'products.product.add_to_cart' | t }}
-          {% else %}
-            {{ 'products.product.sold_out' | t }}
-          {% endif %}
-        </span>
+    <button type="submit" name="add" data-add-to-cart {% unless current_variant.available %}disabled="disabled" {%
+      endunless %}>
+      <span data-add-to-cart-text>
+        {% if current_variant.available %}
+        {{ 'products.product.add_to_cart' | t }}
+        {% else %}
+        {{ 'products.product.sold_out' | t }}
+        {% endif %}
+      </span>
     </button>
   </form>
 
@@ -109,185 +99,32 @@
   </div>
 
   {% if section.settings.show_share_buttons %}
-    {% include 'social-sharing', share_title: product.title, share_permalink: product.url, share_image: product %}
+  {% include 'social-sharing', share_title: product.title, share_permalink: product.url, share_image: product %}
   {% endif %}
 
   {% unless product == empty %}
-    <script type="application/json" data-product-json>
-      {{ product | json }}
-    </script>
+  <script type="application/json" data-product-json>
+    {
+      {
+        product | json
+      }
+    }
+  </script>
   {% endunless %}
 </div> {% endcomment %}
-{% assign webColors = "AliceBlue,AntiqueWhite,Aqua,Aquamarine,Azure,Beige,Bisque,Black,BlanchedAlmond,Blue,BlueViolet,Brown,BurlyWood,CadetBlue,Chartreuse,Chocolate,Coral,CornflowerBlue,Cornsilk,Crimson,Cyan,DarkBlue,DarkCyan,DarkGoldenRod,DarkGray,DarkGrey,DarkGreen,DarkKhaki,DarkMagenta,DarkOliveGreen,Darkorange,DarkOrchid,DarkRed,DarkSalmon,DarkSeaGreen,DarkSlateBlue,DarkSlateGray,DarkSlateGrey,DarkTurquoise,DarkViolet,DeepPink,DeepSkyBlue,DimGray,DimGrey,DodgerBlue,FireBrick,FloralWhite,ForestGreen,Fuchsia,Gainsboro,GhostWhite,Gold,GoldenRod,Gray,Grey,Green,GreenYellow,HoneyDew,HotPink,IndianRed,Indigo,Ivory,Khaki,Lavender,LavenderBlush,LawnGreen,LemonChiffon,LightBlue,LightCoral,LightCyan,LightGoldenRodYellow,LightGray,LightGrey,LightGreen,LightPink,LightSalmon,LightSeaGreen,LightSkyBlue,LightSlateGray,LightSlateGrey,LightSteelBlue,LightYellow,Lime,LimeGreen,Linen,Magenta,Maroon,MediumAquaMarine,MediumBlue,MediumOrchid,MediumPurple,MediumSeaGreen,MediumSlateBlue,MediumSpringGreen,MediumTurquoise,MediumVioletRed,MidnightBlue,MintCream,MistyRose,Moccasin,NavajoWhite,Navy,OldLace,Olive,OliveDrab,Orange,OrangeRed,Orchid,PaleGoldenRod,PaleGreen,PaleTurquoise,PaleVioletRed,PapayaWhip,PeachPuff,Peru,Pink,Plum,PowderBlue,Purple,Red,RosyBrown,RoyalBlue,SaddleBrown,Salmon,SandyBrown,SeaGreen,SeaShell,Sienna,Silver,SkyBlue,SlateBlue,SlateGray,SlateGrey,Snow,SpringGreen,SteelBlue,Tan,Teal,Thistle,Tomato,Turquoise,Violet,Wheat,White,WhiteSmoke,Yellow,YellowGreen" | downcase | split: ',' %}
+{% assign webColors =
+"AliceBlue,AntiqueWhite,Aqua,Aquamarine,Azure,Beige,Bisque,Black,BlanchedAlmond,Blue,BlueViolet,Brown,BurlyWood,CadetBlue,Chartreuse,Chocolate,Coral,CornflowerBlue,Cornsilk,Crimson,Cyan,DarkBlue,DarkCyan,DarkGoldenRod,DarkGray,DarkGrey,DarkGreen,DarkKhaki,DarkMagenta,DarkOliveGreen,Darkorange,DarkOrchid,DarkRed,DarkSalmon,DarkSeaGreen,DarkSlateBlue,DarkSlateGray,DarkSlateGrey,DarkTurquoise,DarkViolet,DeepPink,DeepSkyBlue,DimGray,DimGrey,DodgerBlue,FireBrick,FloralWhite,ForestGreen,Fuchsia,Gainsboro,GhostWhite,Gold,GoldenRod,Gray,Grey,Green,GreenYellow,HoneyDew,HotPink,IndianRed,Indigo,Ivory,Khaki,Lavender,LavenderBlush,LawnGreen,LemonChiffon,LightBlue,LightCoral,LightCyan,LightGoldenRodYellow,LightGray,LightGrey,LightGreen,LightPink,LightSalmon,LightSeaGreen,LightSkyBlue,LightSlateGray,LightSlateGrey,LightSteelBlue,LightYellow,Lime,LimeGreen,Linen,Magenta,Maroon,MediumAquaMarine,MediumBlue,MediumOrchid,MediumPurple,MediumSeaGreen,MediumSlateBlue,MediumSpringGreen,MediumTurquoise,MediumVioletRed,MidnightBlue,MintCream,MistyRose,Moccasin,NavajoWhite,Navy,OldLace,Olive,OliveDrab,Orange,OrangeRed,Orchid,PaleGoldenRod,PaleGreen,PaleTurquoise,PaleVioletRed,PapayaWhip,PeachPuff,Peru,Pink,Plum,PowderBlue,Purple,Red,RosyBrown,RoyalBlue,SaddleBrown,Salmon,SandyBrown,SeaGreen,SeaShell,Sienna,Silver,SkyBlue,SlateBlue,SlateGray,SlateGrey,Snow,SpringGreen,SteelBlue,Tan,Teal,Thistle,Tomato,Turquoise,Violet,Wheat,White,WhiteSmoke,Yellow,YellowGreen"
+| downcase | split: ',' %}
 
-
-<div data-section-id="{{ section.id }}" data-section-type="product" data-enable-history-state="true" class="product container">
-  {%- assign current_variant = product.selected_or_first_available_variant -%}
-  {%- assign featured_image = current_variant.featured_image | default: product.featured_image -%}
-  <div class="prod-nav">
-     {% if collection.previous_product != blank %}
-      <a href="{{collection.previous_product}}"> &laquo; Previous</a>
-    {% else %}
-     <span>&nbsp;</span>   
-    {% endif %}
-    {% if collection.next_product != blank %}
-      <a href="{{collection.next_product}}">Next &raquo;</a>
-    {% else %}
-     <span>&nbsp;</span>   
-    {% endif %}
-    </div>
-  <div class="product__main_image{% if section.settings.thumbnail_align == 'bottom'%} full{% endif%}">
-    <div class="main_image">
-      <img src="{{featured_image | img_url: '400x'}}" alt="{{featured_image.alt}}" />
-    </div>
-    {% if section.settings.thumbnail_align == 'bottom' %}
-      {% if product.images.size > 1 %}
-        <div class="alt_images">
-          {% for image in product.images %}
-            <div class="detail_image">
-                <img class="product-single__thumbnail-image" src="{{ image.src | img_url: '160x160' }}" alt="{{ image.alt | escape }}">
-            </div>
-          {% endfor %}
-          </div>
-      {% endif %}
-    {% endif %}
-  </div>
-  {% if section.settings.thumbnail_align != 'bottom' and product.images.size > 1%}
-    <div class="product__alt_images product__alt_images--{{section.settings.thumbnail_align}}">
-      {% if product.images.size > 1 %}
-          {% for image in product.images %}
-            <div class="detail_image">
-                <img class="product-single__thumbnail-image" src="{{ image.src | img_url: '160x160' }}" alt="{{ image.alt | escape }}">
-            </div>
-          {% endfor %}
-      {% endif %}
-    </div>
-  {% endif %}
-  
-  <div class="main_content">
-      <span class="vendor">{{product.vendor}}</span>
-      <h2>{{product.title}}</h2>
-      {% comment %} <small>{{current_variant.price | money}}</small> {% endcomment %}
-      
-      {% comment %} <div class="btn_container">
-        <button class="add btn add_to_cart" disabled>Add to Bag</button>
-      </div> {% endcomment %}
-    <form action="/cart/add" method="post" enctype="multipart/form-data">
-    <div class="price" data-price-wrapper>
-        <span data-product-price>
-          {{ current_variant.price | money }}
-        </span>
-
-        {% if product.compare_at_price_max > product.price %}
-          <span class="visually-hidden" data-compare-text>{{ 'products.product.regular_price' | t }}</span>
-          <s data-compare-price>
-            {% if current_variant.compare_at_price > current_variant.price %}
-              {{ current_variant.compare_at_price | money }}
-            {% endif %}
-          </s>
-        {% endif %}
-      </div>
-      {% unless product.has_only_default_variant %}
-        {% for option in product.options_with_values %}
-          {% capture opt %}option{{option.position}}{% endcapture %}
-          <div class="selector-wrapper js clearfix">
-            
-            <label for="SingleOptionSelector-{{ forloop.index0 }}" class="variant_label">
-              {{ option.name }}
-            </label>
-            {% if section.settings[opt] == 'swatch' or section.settings[opt] == 'swatch_name' or section.settings[opt] == 'swatch_name_inside' %}
-              {% for value in option.values %}
-                <label class="swatch_container"><input type="radio"
-                value="{{value}}" 
-                data-option="{{option.position}}" 
-                data-single-option-selector
-                name="variant_option{{option.position}}" 
-                data-index="option{{ option.position }}"
-                {% if option.selected_value == value %}checked="checked"{% endif %}
-                class="variant_option{{ option.position }}" /> 
-                {% assign colorCheck = value | downcase %}
-                {% assign backgroundColor = 'white' %}
-                {% if webColors contains colorCheck %}
-                  {% assign backgroundColor = value %}
-                {% endif %}
-                    <span class="swatch {{section.settings.swatch_style}} {% unless section.settings[opt] == 'swatch_name_inside' %} color{% endunless %}" style="background-color:{{value}}; background-image: url({{ value | handle | append: '.png'  | asset_url }})">
-                    {% if section.settings[opt] == 'swatch_name_inside' %}
-                      {{value | capitalize}}
-                    {% endif %}
-                    </span>
-                    {% if section.settings[opt] == 'swatch_name' %}
-                      <span>{{value | capitalize}}</span>
-                    {% endif %}
-                    </label>
-              {% endfor %}
-            {% else %}
-            <select
-              id="SingleOptionSelector-{{ forloop.index0 }}"
-              class="variant-dropdown"
-              data-single-option-selector
-              data-index="option{{ option.position }}">
-              {% for value in option.values %}
-                <option
-                  value="{{ value | escape }}"
-                  {% if option.selected_value == value %}selected="selected"{% endif %}>
-                    {{ value }}
-                </option>
-              {% endfor %}
-            </select> 
-          {% endif %}
-            
-          </div>
-        {% endfor %}
-      {% endunless %}
-
-      <select name="id" class="no-js" data-product-select>
-        {% for variant in product.variants %}
-          <option
-            {% if variant == current_variant %}selected="selected"{% endif %}
-            {% unless variant.available %}disabled="disabled"{% endunless %}
-            value="{{ variant.id }}">
-              {{ variant.title }}
-          </option>
-        {% endfor %}
-      </select>
-
-      <label for="Quantity" class="variant_label">{{ 'products.product.quantity' | t }}</label>
-      <input type="number" id="Quantity" name="quantity" class="variant-quantity" value="1" min="1">
-
-      
-
-      <button
-        type="submit"
-        name="add"
-        class="btn btn--block"
-        data-add-to-cart
-        {% unless current_variant.available %}disabled="disabled"{% endunless %}>
-          <span data-add-to-cart-text>
-            {% if current_variant.available %}
-              {{ 'products.product.add_to_cart' | t }}
-            {% else %}
-              {{ 'products.product.sold_out' | t }}
-            {% endif %}
-          </span>
-      </button>
-    </form>
-    {% if section.settings.show_share_buttons %}
-      {% include 'social-sharing', share_title: product.title, share_permalink: product.url, share_image: product %}
-    {% endif %}
-    <div class="rte">
-      {{ product.description }}
-    </div>
-  </div>
+{% capture layout %}product-layout{{section.settings.page_layout}}{% endcapture %}
+{% include layout %}
 {% if section.settings.show_related_products == true %}
- {% include 'related-products' %}
-{% endif %}
-
-</div>
+  {% include 'related-products' %}
+  {% endif %}
 {% schema %}
   {
     "name": "Product pages",
-    "settings": [
-      {
+    "settings": [{
         "type": "checkbox",
         "id": "show_share_buttons",
         "label": "Show social sharing buttons",
@@ -295,117 +132,176 @@
       },
       {
         "type": "select",
+        "id": "page_layout",
+        "label": "Page Layout",
+        "options": [{
+            "value": "1",
+            "label": "One"
+          },
+          {
+            "value": "2",
+            "label": "Two"
+          }
+        ],
+        "default": "1"
+      },
+      {
+        "type": "select",
         "id": "thumbnail_align",
         "label": "Detail Images Alignment",
-        "options": [
-                { "value": "left", "label": "Left"},
-                { "value": "right", "label": "Right"},
-                { "value": "bottom", "label": "Bottom"}
-            ],
+        "options": [{
+            "value": "left",
+            "label": "Left"
+          },
+          {
+            "value": "right",
+            "label": "Right"
+          },
+          {
+            "value": "bottom",
+            "label": "Bottom"
+          }
+        ],
         "default": "left"
       },
       {
-      "type": "checkbox",
-      "id": "show_related_products",
-      "label": "Show related products",
-      "default": true
-    },
-    {
-            "type": "select",
-            "id": "option1",
-            "label": "Variant Option 1",
-            "options": [
-                { "value": "dropdown", "label": "Drop down"},
-                { "value": "swatch", "label": "Swatch"},
-                { "value": "swatch_name", "label": "Swatch With Name"},
-                { "value": "swatch_name_inside", "label": "Swatch With Name Other"}
-            ],
-            "default": "dropdown"
-        },
+        "type": "checkbox",
+        "id": "show_related_products",
+        "label": "Show related products",
+        "default": true
+      },
       {
-            "type": "select",
-            "id": "option2",
-            "label": "Variant Option 2",
-            "options": [
-                { "value": "dropdown", "label": "Drop down"},
-                { "value": "swatch", "label": "Swatch"},
-                { "value": "swatch_name", "label": "Swatch With Name"},
-                { "value": "swatch_name_inside", "label": "Swatch With Name Other"}
-            ],
-            "default": "dropdown"
-        },
+        "type": "select",
+        "id": "option1",
+        "label": "Variant Option 1",
+        "options": [{
+            "value": "dropdown",
+            "label": "Drop down"
+          },
+          {
+            "value": "swatch",
+            "label": "Swatch"
+          },
+          {
+            "value": "swatch_name",
+            "label": "Swatch With Name"
+          },
+          {
+            "value": "swatch_name_inside",
+            "label": "Swatch With Name Other"
+          }
+        ],
+        "default": "dropdown"
+      },
       {
-            "type": "select",
-            "id": "option3",
-            "label": "Variant Option 3",
-            "options": [
-                { "value": "dropdown", "label": "Drop down"},
-                { "value": "swatch", "label": "Swatch"},
-                { "value": "swatch_name", "label": "Swatch With Name"},
-                { "value": "swatch_name_inside", "label": "Swatch With Name Other"}
-            ],
-            "default": "dropdown"
-        },
-        {
-            "type":      "radio",
-            "id":        "swatch_style",
-            "label":     "Swatch Style",
-            "options": [
-                { "value": "circle", "label": "Circle" },
-                { "value": "square", "label": "Square" }
-            ],
-            "default":   "circle"
-        },
-    {
-      "id": "related_title",
-      "type": "text",
-      "label": "Section title",
-      "default": "Other fine products"
-    },
-    {
-      "type": "select",
-      "id": "related_grid_num",
-      "label": "Products per row (Desktop)",
-      "default": "3",
-      "options": [
-        {
-          "value": "2",
-          "label": "2"
-        },
-        {
-          "value": "3",
-          "label": "3"
-        },
-        {
-          "value": "4",
-          "label": "4"
-        },
-        {
-          "value": "5",
-          "label": "5"
-        }
-      ]
-    },
-    {
-      "type": "select",
-      "id": "related_grid_row",
-      "label": "Number of rows (Desktop)",
-      "default": "1",
-      "options": [
-        {
-          "value": "1",
-          "label": "1"
-        },
-        {
-          "value": "2",
-          "label": "2"
-        },
-        {
-          "value": "3",
-          "label": "3"
-        }
-      ]
-    }
+        "type": "select",
+        "id": "option2",
+        "label": "Variant Option 2",
+        "options": [{
+            "value": "dropdown",
+            "label": "Drop down"
+          },
+          {
+            "value": "swatch",
+            "label": "Swatch"
+          },
+          {
+            "value": "swatch_name",
+            "label": "Swatch With Name"
+          },
+          {
+            "value": "swatch_name_inside",
+            "label": "Swatch With Name Other"
+          }
+        ],
+        "default": "dropdown"
+      },
+      {
+        "type": "select",
+        "id": "option3",
+        "label": "Variant Option 3",
+        "options": [{
+            "value": "dropdown",
+            "label": "Drop down"
+          },
+          {
+            "value": "swatch",
+            "label": "Swatch"
+          },
+          {
+            "value": "swatch_name",
+            "label": "Swatch With Name"
+          },
+          {
+            "value": "swatch_name_inside",
+            "label": "Swatch With Name Other"
+          }
+        ],
+        "default": "dropdown"
+      },
+      {
+        "type": "radio",
+        "id": "swatch_style",
+        "label": "Swatch Style",
+        "options": [{
+            "value": "circle",
+            "label": "Circle"
+          },
+          {
+            "value": "square",
+            "label": "Square"
+          }
+        ],
+        "default": "circle"
+      },
+      {
+        "id": "related_title",
+        "type": "text",
+        "label": "Section title",
+        "default": "Other fine products"
+      },
+      {
+        "type": "select",
+        "id": "related_grid_num",
+        "label": "Products per row (Desktop)",
+        "default": "3",
+        "options": [{
+            "value": "2",
+            "label": "2"
+          },
+          {
+            "value": "3",
+            "label": "3"
+          },
+          {
+            "value": "4",
+            "label": "4"
+          },
+          {
+            "value": "5",
+            "label": "5"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "related_grid_row",
+        "label": "Number of rows (Desktop)",
+        "default": "1",
+        "options": [{
+            "value": "1",
+            "label": "1"
+          },
+          {
+            "value": "2",
+            "label": "2"
+          },
+          {
+            "value": "3",
+            "label": "3"
+          }
+        ]
+      }
     ]
   }
 {% endschema %}
